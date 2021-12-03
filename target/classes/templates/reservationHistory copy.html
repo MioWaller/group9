@@ -1,0 +1,73 @@
+
+<style>
+    table.GeneratedTable {
+      width: 100%;
+      background-color: #ffffff;
+      border-collapse: collapse;
+      border-width: 2px;
+      border-color: #000000;
+      border-style: solid;
+      color: #000000;
+    }
+    
+    table.GeneratedTable td, table.GeneratedTable th {
+      border-width: 2px;
+      border-color: #000000;
+      border-style: solid;
+      padding: 3px;
+    }
+    
+    table.GeneratedTable thead {
+      background-color: #ffffff;
+    }
+    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <h2>Reservation History</h2>
+    <table class="GeneratedTable">
+      <thead>
+        <tr>
+          <th>Reservation ID</th>
+          <th>User ID</th>
+          <th>FullName</th>
+          <th>Table Id</th>
+          <th>Date:--</th>
+          <th>Time:--</th>
+          <th>No Of Guest--</th>
+          <!--
+             private Integer id;
+    private Integer userid;
+    
+
+    private Integer tableId;
+    private String fullName;
+    private String phoneNumber;
+    private String email;
+    private String date;
+    private String time;
+    private int numOfGuests;
+    private boolean isHoliday;
+            
+            
+            
+            <th>Credit Card</th>-->
+        </tr>
+      </thead>
+     
+      <tbody>
+        <tr th:each="quote : ${list}">
+          <td><span th:text="${quote.getId()}"></span></td>
+          <td><span th:text="${quote.getUserId()}"></span></td>
+          <td><span th:text="${quote.getFullName()}"></span></td>
+          <td><span th:text="${quote.getTableId()}"></span></td>
+          
+          <td><span th:text="${quote.getDate()}">Date</span></td>
+          <td><span th:text="${quote.getTime()}">Time</span></td>
+          <td><span th:text="${quote.getNumOfGuests()}">Number of People</span></td>
+          
+          
+        </tr>
+      </tbody>
+    
+    </table>
+    <a href='/login'><button>Return to reservation page</button></a>

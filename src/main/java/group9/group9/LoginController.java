@@ -71,7 +71,13 @@ public class LoginController {
     }
 
 
-    
+    @RequestMapping("/adminDisplayTable")
+    public String adminTableDisplay(Model model){
+        List<TableEntity> list=tableRepository.findAll();
+        model.addAttribute("list", list);
+
+        return "guestAvailableTable";
+    }
 
 }
 

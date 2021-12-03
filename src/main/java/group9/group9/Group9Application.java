@@ -12,6 +12,7 @@ public class Group9Application {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Group9Application.class, args);
+		
 	}
 
 }
