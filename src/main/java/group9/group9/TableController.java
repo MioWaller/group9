@@ -244,6 +244,8 @@ public String combineTable( @RequestParam(name="num")String num, Model map,HttpS
 
     int ng=Integer.parseInt(num);
     List<TableEntity> tc =tableRepository.findByCapacityAndIsReserved(ng,false);
+    List<TableEntity> t1=null;
+    List<TableEntity> t2=null;
      if(!tc.isEmpty()){
         List<TableEntity> tableList= tableRepository.findByIsReserved(false);
         map.addAttribute("list", tableList);
@@ -268,24 +270,41 @@ if(guest>2 && guest<9){
 
 
 if(guest==8){
-   List<TableEntity> t1= tableRepository.findByCapacityAndIsReserved(6, false);
-   List<TableEntity> t2= tableRepository.findByCapacityAndIsReserved(2, false);
+    t1= tableRepository.findByCapacityAndIsReserved(6, false);
+    t2= tableRepository.findByCapacityAndIsReserved(2, false);
+   if(t1.size()==0 || t2.size()==0){///////////////////////
+    List<TableEntity> tableList= tableRepository.findByIsReserved(false);
+    map.addAttribute("list", tableList);
+     return "displayAvailableTable";
+   }
    listTid.add(t1.get(0).getTable_id());
    listTid.add(t2.get(0).getTable_id());
 
 
 }
 else if(guest==6){
-    List<TableEntity> t1= tableRepository.findByCapacityAndIsReserved(4, false);
-    List<TableEntity> t2= tableRepository.findByCapacityAndIsReserved(2, false);
+     t1= tableRepository.findByCapacityAndIsReserved(4, false);
+     t2= tableRepository.findByCapacityAndIsReserved(2, false);
+    if(t1.size()==0 || t2.size()==0){///////////////////////
+        List<TableEntity> tableList= tableRepository.findByIsReserved(false);
+        map.addAttribute("list", tableList);
+         return "displayAvailableTable";
+    }
     listTid.add(t1.get(0).getTable_id());
     listTid.add(t2.get(0).getTable_id());
 }
 
 else{// guest ===4
 
-    List<TableEntity> t1= tableRepository.findByCapacityAndIsReserved(2, false);
-    List<TableEntity> t2= tableRepository.findByCapacityAndIsReserved(2, false);
+    t1= tableRepository.findByCapacityAndIsReserved(2, false);
+    t2= tableRepository.findByCapacityAndIsReserved(2, false);
+
+  
+    if(t1.size()==0 || t2.size()==0){
+        List<TableEntity> tableList= tableRepository.findByIsReserved(false);
+        map.addAttribute("list", tableList);
+         return "displayAvailableTable";
+       }
     listTid.add(t1.get(0).getTable_id());
     listTid.add(t2.get(0).getTable_id());
 
