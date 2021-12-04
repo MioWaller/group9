@@ -18,14 +18,11 @@ public class LoginController {
     @Autowired
     private UserRepository userRepository;
 
-    /*
     @Autowired 
     TableController tableController;
 
     @Autowired
     TableRepository tableRepository;
-
-    */
 
     @GetMapping("/login")
 	public String login(Model model) {
@@ -60,14 +57,12 @@ public class LoginController {
         return "redirect:/reservationhistory";
     }
 
-    /*
     @RequestMapping("/guestAvailableTable")
     public String showTable(Model model){
         List<TableEntity> list=tableRepository.findByIsReserved(false);
       model.addAttribute("list", list);
         return "guestAvailableTable";
     }
-    */
 
 }
 
