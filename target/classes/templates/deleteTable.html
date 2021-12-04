@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display available table page </title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body>
+
+
+  <div align="center">
+
+  <table class="table">
+      <thead>
+         <th scope="col">Table ID---</th>
+         <th scope="col">Table Capacity---</th>
+         <th scope="col">Is Table Reserved---</th>
+         <th scope="col">Action</th>
+         
+         
+        </thead><br>
+
+      <tr scope="row" th:each="list : ${list}">
+          <td th:text="${list.getTable_id()}" ></td>
+          <td th:text="${list.getCapacity()}"></td>
+          <td th:text="${list.isReserved()}"></td>
+          <td ><button><a href="#" th:href="@{/deleteTable(tid=${list.getTable_id()})}" >Delete Table</a></button></td>
+      </tr>
+
+
+   
+
+  </table>
+
+  </div>  
+<center>
+<pre>
+
+
+
+
+</pre>
+</center>
+  
+
+</body>
+</html>
