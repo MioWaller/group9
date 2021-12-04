@@ -1,0 +1,209 @@
+# Created at 2021-11-27T22:46:17.490
+TestSet has not finished before stream error has appeared >> initializing exit by non-null configuration: null
+java.io.EOFException
+	at java.base/java.io.DataInputStream.readInt(DataInputStream.java:397)
+	at org.apache.maven.surefire.booter.MasterProcessCommand.decode(MasterProcessCommand.java:115)
+	at org.apache.maven.surefire.booter.CommandReader$CommandRunnable.run(CommandReader.java:391)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+
+
+# Created at 2021-11-27T22:46:18.443
+Unexpected IOException with stream: 2021-11-27 22:46:18.442  INFO 25368 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+
+
+# Created at 2021-11-27T22:46:18.445
+Unexpected IOException with stream: 2021-11-27 22:46:18.444  INFO 25368 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+
+
+# Created at 2021-11-27T22:46:18.448
+Unexpected IOException with stream: 2021-11-27 22:46:18.447  INFO 25368 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+
+
+# Created at 2021-11-27T22:46:18.471
+Unexpected IOException with stream: 2021-11-27 22:46:18.470  INFO 25368 --- [           main] group9.group9.LoginControllerTests       : Started LoginControllerTests in 1.365 seconds (JVM running for 16.311)
+
+
+# Created at 2021-11-27T22:46:18.483
+Unexpected IOException: 5,1,group9.group9.LoginControllerTests,contextLoads,null,null,null
+
+
+# Created at 2021-11-27T22:46:18.643
+Unexpected IOException: 6,1,group9.group9.LoginControllerTests,contextLoads,null,null,null
+
+
+# Created at 2021-11-27T22:46:18.645
+Unexpected IOException: 5,1,group9.group9.LoginControllerTests,loginSubmitShouldOpenLoginIfLoginSucceeded,null,null,null
+
+
+# Created at 2021-11-27T22:46:18.906
+Unexpected IOException with stream: 
+
+
+# Created at 2021-11-27T22:46:18.907
+Unexpected IOException with stream: MockHttpServletRequest:
+
+
+# Created at 2021-11-27T22:46:18.908
+Unexpected IOException with stream:       HTTP Method = POST
+
+
+# Created at 2021-11-27T22:46:18.909
+Unexpected IOException with stream:       Request URI = /login
+
+
+# Created at 2021-11-27T22:46:18.910
+Unexpected IOException with stream:        Parameters = {username=[group9], password=[password]}
+
+
+# Created at 2021-11-27T22:46:18.911
+Unexpected IOException with stream:           Headers = [Content-Type:"application/x-www-form-urlencoded;charset=UTF-8"]
+
+
+# Created at 2021-11-27T22:46:18.912
+Unexpected IOException with stream:              Body = null
+
+
+# Created at 2021-11-27T22:46:18.913
+Unexpected IOException with stream:     Session Attrs = {}
+
+
+# Created at 2021-11-27T22:46:18.916
+Unexpected IOException with stream: 
+
+
+# Created at 2021-11-27T22:46:18.917
+Unexpected IOException with stream: Handler:
+
+
+# Created at 2021-11-27T22:46:18.918
+Unexpected IOException with stream:              Type = group9.group9.LoginController
+
+
+# Created at 2021-11-27T22:46:18.919
+Unexpected IOException with stream:            Method = group9.group9.LoginController#loginSubmit(LoginModel, HttpServletResponse)
+
+
+# Created at 2021-11-27T22:46:18.921
+Unexpected IOException with stream: 
+
+
+# Created at 2021-11-27T22:46:18.922
+Unexpected IOException with stream: Async:
+
+
+# Created at 2021-11-27T22:46:18.923
+Unexpected IOException with stream:     Async started = false
+
+
+# Created at 2021-11-27T22:46:18.923
+Unexpected IOException with stream:      Async result = null
+
+
+# Created at 2021-11-27T22:46:18.924
+Unexpected IOException with stream: 
+
+
+# Created at 2021-11-27T22:46:18.925
+Unexpected IOException with stream: Resolved Exception:
+
+
+# Created at 2021-11-27T22:46:18.926
+Unexpected IOException with stream:              Type = null
+
+
+# Created at 2021-11-27T22:46:18.927
+Unexpected IOException with stream: 
+
+
+# Created at 2021-11-27T22:46:18.928
+Unexpected IOException with stream: ModelAndView:
+
+
+# Created at 2021-11-27T22:46:18.929
+Unexpected IOException with stream:         View name = redirect:/reservationhistory
+
+
+# Created at 2021-11-27T22:46:18.930
+Unexpected IOException with stream:              View = null
+
+
+# Created at 2021-11-27T22:46:18.932
+Unexpected IOException with stream:             Model = null
+
+
+# Created at 2021-11-27T22:46:18.934
+Unexpected IOException with stream: 
+
+
+# Created at 2021-11-27T22:46:18.935
+Unexpected IOException with stream: FlashMap:
+
+
+# Created at 2021-11-27T22:46:18.936
+Unexpected IOException with stream:        Attributes = null
+
+
+# Created at 2021-11-27T22:46:18.937
+Unexpected IOException with stream: 
+
+
+# Created at 2021-11-27T22:46:18.938
+Unexpected IOException with stream: MockHttpServletResponse:
+
+
+# Created at 2021-11-27T22:46:18.938
+Unexpected IOException with stream:            Status = 302
+
+
+# Created at 2021-11-27T22:46:18.939
+Unexpected IOException with stream:     Error message = null
+
+
+# Created at 2021-11-27T22:46:18.940
+Unexpected IOException with stream:           Headers = [Set-Cookie:"user-id=1", Content-Language:"en", Location:"/reservationhistory"]
+
+
+# Created at 2021-11-27T22:46:18.941
+Unexpected IOException with stream:      Content type = null
+
+
+# Created at 2021-11-27T22:46:18.942
+Unexpected IOException with stream:              Body = 
+
+
+# Created at 2021-11-27T22:46:18.942
+Unexpected IOException with stream:     Forwarded URL = null
+
+
+# Created at 2021-11-27T22:46:18.943
+Unexpected IOException with stream:    Redirected URL = /reservationhistory
+
+
+# Created at 2021-11-27T22:46:18.944
+Unexpected IOException with stream:           Cookies = [[Cookie@180121e7 name = 'user-id', value = '1', comment = [null], domain = [null], maxAge = -1, path = [null], secure = false, version = 0, httpOnly = false]]
+
+
+# Created at 2021-11-27T22:46:18.959
+Unexpected IOException: 8,1,group9.group9.LoginControllerTests,loginSubmitShouldOpenLoginIfLoginSucceeded,null,Redirected URL expected:</reservationHistory> but was:</reservationhistory>,null,Redirected URL expected:</reservationHistory> but was:</reservationhistory>,LoginControllerTests.loginSubmitShouldOpenLoginIfLoginSucceeded:83 Redirected URL expected:</reservationHistory> but was:</reservationhistory>,java.lang.AssertionError: Redirected URL expected:</reservationHistory> but was:</reservationhistory>\000A\0009at group9.group9.LoginControllerTests.loginSubmitShouldOpenLoginIfLoginSucceeded(LoginControllerTests.java:83)\000A
+
+
+# Created at 2021-11-27T22:46:18.962
+Unexpected IOException: 5,1,group9.group9.LoginControllerTests,loginShouldReturnCorrectTemplate,null,null,null
+
+
+# Created at 2021-11-27T22:46:19.696
+Unexpected IOException: 6,1,group9.group9.LoginControllerTests,loginShouldReturnCorrectTemplate,null,null,null
+
+
+# Created at 2021-11-27T22:46:19.700
+Unexpected IOException: 5,1,group9.group9.LoginControllerTests,loginSubmitShouldOpenLoginIfLoginFailed,null,null,null
+
+
+# Created at 2021-11-27T22:46:19.711
+Unexpected IOException: 6,1,group9.group9.LoginControllerTests,loginSubmitShouldOpenLoginIfLoginFailed,null,null,null
+
+
+# Created at 2021-11-27T22:46:19.712
+Unexpected IOException: 2,1,org.apache.maven.surefire.junitplatform.JUnitPlatformProvider,group9.group9.LoginControllerTests,null,null,null
+
+
