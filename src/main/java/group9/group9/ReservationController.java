@@ -252,7 +252,14 @@ public String adminReservation(@RequestParam(name="id")String id,Model model){
 
 
 
+@RequestMapping("/reservationOfGuest")
+	public String reservationOfGuest(Model model) {
+        
+        ReservationModel loginModel = new ReservationModel();
+        model.addAttribute("reservationModel", loginModel);
 
+        return "reservation";
+	}
 
 
 
