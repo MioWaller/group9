@@ -24,12 +24,4 @@ public class TableModel {
         this.isReserved = isReserved;
     }
     
-    
-    
-
-
-
-
-
-    
     }

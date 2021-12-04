@@ -8,14 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
-import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.*;
 
 /* this file can be combined into the reservation page */
@@ -62,43 +58,6 @@ public String showAddTable(Model map, HttpServletRequest request){
     return "displayAvailableTable";
 }
 
-
-
-
-
-
-
-// this method will get Table Information from addtable html
-// Save the information to Database on Table Entity 
-@PostMapping("/saveTable")
-public String insertTableDB(@RequestParam(name="capacity")String capacity,@RequestParam(name="isReserved")String reserve, ModelMap model){
-  int cap=Integer.parseInt(capacity);
-  boolean isReseved=Boolean.parseBoolean(reserve);
-  if(cap>8 || cap<1 ){
-   
-    return "addTable";
-  }
-  
-  
- 
-
-TableEntity tableEntity= new TableEntity();
-tableEntity.setCapacity(cap);
-tableEntity.setReserved(isReseved);
-tableRepository.save(tableEntity);
-
-String message ="Your Information is Successfully  Save to Our System ";
-model.addAttribute("msg", message);
-return "addTable";
-
-}
-
-
-
-
-
-
-
 //This Method will Show all the Table on the system 
 @RequestMapping("/displayTable")
 public String displayAvailableTable(ModelMap model){
@@ -113,7 +72,6 @@ public String displayAvailableTable(ModelMap model){
 @RequestMapping("/selectTable")
 public String selectTable(@RequestParam(name="tid")String tid,Model model,HttpServletRequest request){
     int id=Integer.parseInt(tid);
-    TableEntity tableList= tableRepository.findById(id).get();
   System.out.println("Table id IS ---"+ id +"\n\n\n\n");
     //ReservationEntity reservationEntity= new ReservationEntity();
     //reservationEntity.setTableId(id);
@@ -171,28 +129,6 @@ public String selectTable(@RequestParam(name="tid")String tid,Model model,HttpSe
     String fname=usersReservation.get(0).getFullName();
     String phone=usersReservation.get(0).getPhoneNumber();
       
-
-    
-
-    //System.out.println("Date And Time =="+ date+"     " +time+"\n");
-    //Integer table_id = usersReservation.get(0).getTableId();
-
-    //List<ReservationEntity> conflictChecker = reservationRepository.findByDateAndTableId(date,table_id);
-    // no conflicts, assign table id
-    ///if(conflictChecker.isEmpty()){
-       // usersReservation.get(0).setTableId(id);
-    //}
-    //else{
-       // if(time.substring(0,3).equals(conflictChecker.get(0).getTime().substring(0,3))){//there is a conflict
-           // List<TableEntity> table= tableRepository.findAll();
-
-             //model.addAttribute("list", table);
-            //return "displayAvailableTable";
-        //}
-        //else{//no conflict
-           // usersReservation.get(0).setTableId(id);
-        //}
-      
         System.out.println(userid);
         int userId=Integer.parseInt(userid);
 
@@ -243,22 +179,6 @@ public String selectTable(@RequestParam(name="tid")String tid,Model model,HttpSe
 
     return "reservationHistory";
 }
-
-@RequestMapping("/checkReservation")
-public String checkReservation(Model map){
-    
-    return "allReservation";
-}
-
-
-
-//@RequestMapping("/combineTable")
-//public String combineTable(@RequestParam(name="guestNo") String  guest,Model map){
-
-//return "reservationHistory";
-//}
-
-
 
 @RequestMapping("/combineTable")
 public String combineTable( @RequestParam(name="num")String num, Model map,HttpServletRequest request){
@@ -428,21 +348,6 @@ int tableNo2=listTid.get(1);
     //tableRepository.save(tableList);
     reservationRepository.save(reservation);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 TableEntity table1=tableRepository.findById(listTid.get(0)).get();
 table1.setReserved(true);
 tableRepository.save(table1);
@@ -455,20 +360,9 @@ List<ReservationEntity> list=reservationRepository.findByUserid(ui);
    
 
 
-return "reservationHistory";
+return "reservationhistory";
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
 
 }

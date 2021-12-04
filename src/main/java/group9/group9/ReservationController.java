@@ -29,8 +29,6 @@ public class ReservationController {
 
     @Autowired
     private UserInfoRepository userInfoRepository;
-    @Autowired
-    private HolidayRepository holidayRepository;
 
     @GetMapping("/reservation")
 	public String reservation(Model model, HttpServletRequest request) {
@@ -218,43 +216,5 @@ public class ReservationController {
     }
      
     }
-
-    
-
-
-
-@RequestMapping("/seeReservation")
-public String adminReservation(Model model){
-  
-  
-    model.addAttribute("list", reservationRepository.findAll());
-
-
-    return "allReservation";
-}
-
-@RequestMapping("/deleteReservation")
-public String adminReservation(@RequestParam(name="id")String id,Model model){
-  
-    int ids=Integer.parseInt(id);
-
-    reservationRepository.deleteById(ids);
-  
-
-
-    model.addAttribute("list", reservationRepository.findAll());
-
-
-    return "allReservation";
-}
-
-
-
-
-
-
-
-
-
 
 }

@@ -12,83 +12,62 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-<span class="fc" id="L18">public class LoginController {</span>
+<span class="fc" id="L17">public class LoginController {</span>
     @Autowired
     private UserRepository userRepository;
 
+    /*
     @Autowired 
     TableController tableController;
 
     @Autowired
     TableRepository tableRepository;
 
+    */
+
     @GetMapping(&quot;/login&quot;)
 	public String login(Model model) {
-<span class="nc" id="L30">        LoginModel loginModel = new LoginModel();</span>
-<span class="nc" id="L31">        model.addAttribute(&quot;loginModel&quot;, loginModel);</span>
+<span class="fc" id="L32">        LoginModel loginModel = new LoginModel();</span>
+<span class="fc" id="L33">        model.addAttribute(&quot;loginModel&quot;, loginModel);</span>
         
         //tableController.combineTable(6);
         
-<span class="nc" id="L35">        return &quot;login&quot;;</span>
+<span class="fc" id="L37">        return &quot;login&quot;;</span>
 	}
 
     @PostMapping(&quot;/login&quot;)
     public String loginSubmit(@ModelAttribute LoginModel loginModel, HttpServletResponse response) {
 
-<span class="nc" id="L41">       List&lt; UserEntity&gt; users = userRepository.findByUsername(loginModel.getUsername());</span>
+<span class="fc" id="L43">       List&lt; UserEntity&gt; users = userRepository.findByUsername(loginModel.getUsername());</span>
 
-<span class="nc bnc" id="L43" title="All 2 branches missed.">        if (users.isEmpty()) {</span>
-<span class="nc" id="L44">            return &quot;redirect:/login&quot;;</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        if (users.isEmpty()) {</span>
+<span class="fc" id="L46">            return &quot;redirect:/login&quot;;</span>
         }
         
-<span class="nc bnc" id="L47" title="All 2 branches missed.">        if(users.get(0).isAdmin()==true){</span>
+<span class="fc" id="L49">        UserEntity user = users.get(0);</span>
 
-<span class="nc" id="L49">            return &quot;addTable&quot;;</span>
+<span class="fc" id="L51">        String hash = PasswordEncryption.hash(loginModel.getPassword());</span>
+
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">        if (!user.getPassword().equals(hash)) {</span>
+<span class="nc" id="L54">            return &quot;redirect:/login&quot;;</span>
         }
 
-        
-<span class="nc" id="L53">        UserEntity user = users.get(0);</span>
+<span class="fc" id="L57">        Cookie cookie = new Cookie(&quot;user-id&quot;, user.getId().toString());</span>
+<span class="fc" id="L58">        response.addCookie(cookie);</span>
 
-<span class="nc" id="L55">        String hash = PasswordEncryption.hash(loginModel.getPassword());</span>
-
-<span class="nc bnc" id="L57" title="All 2 branches missed.">        if (!user.getPassword().equals(hash)) {</span>
-<span class="nc" id="L58">            return &quot;redirect:/login&quot;;</span>
-        }
-
-<span class="nc" id="L61">        Cookie cookie = new Cookie(&quot;user-id&quot;, user.getId().toString());</span>
-<span class="nc" id="L62">        response.addCookie(cookie);</span>
-
-<span class="nc" id="L64">        return &quot;redirect:/reservationhistory&quot;;</span>
+<span class="fc" id="L60">        return &quot;redirect:/reservationhistory&quot;;</span>
     }
 
+    /*
     @RequestMapping(&quot;/guestAvailableTable&quot;)
     public String showTable(Model model){
-<span class="nc" id="L69">        List&lt;TableEntity&gt; list=tableRepository.findByIsReserved(false);</span>
-<span class="nc" id="L70">      model.addAttribute(&quot;list&quot;, list);</span>
-<span class="nc" id="L71">        return &quot;guestAvailableTable&quot;;</span>
+        List&lt;TableEntity&gt; list=tableRepository.findByIsReserved(false);
+      model.addAttribute(&quot;list&quot;, list);
+        return &quot;guestAvailableTable&quot;;
     }
-
-
-    @RequestMapping(&quot;/adminDisplayTable&quot;)
-    public String adminTableDisplay(Model model){
-<span class="nc" id="L77">        List&lt;TableEntity&gt; list=tableRepository.findAll();</span>
-<span class="nc" id="L78">        model.addAttribute(&quot;list&quot;, list);</span>
-
-<span class="nc" id="L80">        return &quot;deleteTable&quot;;</span>
-    }
-
-    @RequestMapping(&quot;deleteTable&quot;)
-    public String deleteTable(@RequestParam(name=&quot;tid&quot;)String tid,Model map){
-<span class="nc" id="L85">  int ti=Integer.parseInt(tid);</span>
-   //TableEntity e =tableRepository.findById(ti).get();
-<span class="nc" id="L87">   tableRepository.deleteById(ti);</span>
-<span class="nc" id="L88">   List&lt;TableEntity&gt; list=tableRepository.findAll();</span>
-<span class="nc" id="L89">   map.addAttribute(&quot;list&quot;, list);</span>
-<span class="nc" id="L90">       return &quot;deleteTable&quot;;</span>
-    }
+    */
 
 }
 

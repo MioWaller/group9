@@ -22,11 +22,11 @@ import javax.servlet.http.*;
 <span class="fc" id="L22">            userid = cookie[i].getValue();</span>
             try{
 <span class="fc" id="L24">                Integer.parseInt(userid);</span>
-<span class="fc" id="L25">            }</span>
+            }
 <span class="fc" id="L26">            catch(NumberFormatException e)</span>
             {
 <span class="fc" id="L28">                userid=null;</span>
-            }
+<span class="fc" id="L29">            }</span>
 <span class="fc bfc" id="L30" title="All 2 branches covered.">            if(userid != null)</span>
             {
 <span class="fc" id="L32">                break;</span>
@@ -36,7 +36,7 @@ import javax.servlet.http.*;
 <span class="fc" id="L36">        int ui=Integer.parseInt(userid);</span>
 <span class="fc" id="L37">        List&lt;ReservationEntity&gt; list=reservationRepository.findByUserid(ui);</span>
 <span class="fc" id="L38">        model.addAttribute(&quot;list&quot;,list );</span>
-<span class="fc" id="L39">        return &quot;reservationHistory&quot;;</span>
+<span class="fc" id="L39">        return &quot;reservationhistory&quot;;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

@@ -36,6 +36,6 @@ public class ReservationHistoryController {
         int ui=Integer.parseInt(userid);
         List<ReservationEntity> list=reservationRepository.findByUserid(ui);
         model.addAttribute("list",list );
-        return "reservationHistory";
+        return "reservationhistory";
     }
 }

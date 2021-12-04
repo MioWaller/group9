@@ -13,44 +13,34 @@ import javax.persistence.*;
 
      private String password;
 
-     private boolean isAdmin;
-
     public Integer getId() {
-<span class="fc" id="L19">        return id;</span>
+<span class="fc" id="L17">        return id;</span>
     }
 
     public void setUserId(Integer id) {
-<span class="fc" id="L23">        this.id = id;</span>
-<span class="fc" id="L24">    }</span>
+<span class="fc" id="L21">        this.id = id;</span>
+<span class="fc" id="L22">    }</span>
 
     public String getUsername() {
-<span class="fc" id="L27">        return username;</span>
+<span class="fc" id="L25">        return username;</span>
     }
 
     public void setUsername(String username) {
-<span class="fc" id="L31">        this.username = username;</span>
-<span class="fc" id="L32">    }</span>
+<span class="fc" id="L29">        this.username = username;</span>
+<span class="fc" id="L30">    }</span>
 
     public String getPassword() {
-<span class="fc" id="L35">        return password;</span>
+<span class="fc" id="L33">        return password;</span>
     }
 
     public void setPassword(String password) {
-<span class="fc" id="L39">        this.password = password;</span>
-<span class="fc" id="L40">    }</span>
-
-    public boolean isAdmin() {
-<span class="fc" id="L43">        return isAdmin;</span>
-    }
-
-    public void setAdmin(boolean isAdmin) {
-<span class="fc" id="L47">        this.isAdmin = isAdmin;</span>
-<span class="fc" id="L48">    }</span>
+<span class="fc" id="L37">        this.password = password;</span>
+<span class="fc" id="L38">    }</span>
 
     @Override
     public String toString() {
-<span class="fc" id="L52">        return &quot;UserEntity [isAdmin=&quot; + isAdmin + &quot;, password=&quot; + password + &quot;, user_id (aka. id) =&quot; + id + &quot;, username=&quot;</span>
-<span class="fc" id="L53">                + username + &quot;]&quot;;</span>
+<span class="fc" id="L42">        return &quot;UserEntity [password=&quot; + password + &quot;, user_id (aka. id) =&quot; + id + &quot;, username=&quot;</span>
+                + username + &quot;]&quot;;
     }
 
      

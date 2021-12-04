@@ -15,13 +15,11 @@ public class UserEntityTests {
         entity.setUsername("group9_username");
         entity.setPassword("group9password");
         entity.setUserId(9);
-        entity.setAdmin(true);
 
         assertEquals(entity.getUsername(), "group9_username");
         assertEquals(entity.getPassword(), "group9password");
         assertEquals(entity.getId(), 9);
-        assertEquals(entity.isAdmin(), true);
-        assertEquals(entity.toString(), "UserEntity [isAdmin=" + true + ", password=" + "group9password" + ", user_id (aka. id) =" + 9 + ", username="
+        assertEquals(entity.toString(), "UserEntity [password=" + "group9password" + ", user_id (aka. id) =" + 9 + ", username="
         + "group9_username" + "]");
     }
     

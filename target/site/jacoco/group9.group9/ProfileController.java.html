@@ -29,11 +29,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 <span class="fc" id="L29">            userid = cookie1[i].getValue();</span>
             try{
 <span class="fc" id="L31">                Integer.parseInt(userid);</span>
-<span class="fc" id="L32">            }</span>
+            }
 <span class="fc" id="L33">            catch(NumberFormatException e)</span>
             {
 <span class="fc" id="L35">                userid=null;</span>
-            }
+<span class="fc" id="L36">            }</span>
 <span class="fc bfc" id="L37" title="All 2 branches covered.">            if(userid != null)</span>
             {
 <span class="fc" id="L39">                break;</span>
@@ -52,7 +52,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 <span class="fc" id="L52">            temp.setCity(&quot;&quot;);</span>
 <span class="fc" id="L53">            temp.setState(&quot;&quot;);</span>
 <span class="fc" id="L54">            temp.setZipcode(&quot;&quot;);</span>
-<span class="fc" id="L55">        }</span>
+        }
         else{
 <span class="nc" id="L57">            temp.setFullName(userInfoEntity.get(0).getFullName());</span>
 <span class="nc" id="L58">            temp.setEmail(userInfoEntity.get(0).getEmail());</span>
@@ -110,11 +110,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 <span class="fc" id="L110">            userid = cookie1[i].getValue();</span>
             try{
 <span class="fc" id="L112">                Integer.parseInt(userid);</span>
-<span class="fc" id="L113">            }</span>
+            }
 <span class="fc" id="L114">            catch(NumberFormatException e)</span>
             {
 <span class="fc" id="L116">                userid=null;</span>
-            }
+<span class="fc" id="L117">            }</span>
 <span class="fc bfc" id="L118" title="All 2 branches covered.">            if(userid != null)</span>
             {
 <span class="fc" id="L120">                break;</span>

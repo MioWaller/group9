@@ -12,18 +12,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class LoginController {
     @Autowired
     private UserRepository userRepository;
 
+    /*
     @Autowired 
     TableController tableController;
 
     @Autowired
     TableRepository tableRepository;
+
+    */
 
     @GetMapping("/login")
 	public String login(Model model) {
@@ -44,12 +46,6 @@ public class LoginController {
             return "redirect:/login";
         }
         
-        if(users.get(0).isAdmin()==true){
-
-            return "addTable";
-        }
-
-        
         UserEntity user = users.get(0);
 
         String hash = PasswordEncryption.hash(loginModel.getPassword());
@@ -64,31 +60,14 @@ public class LoginController {
         return "redirect:/reservationhistory";
     }
 
+    /*
     @RequestMapping("/guestAvailableTable")
     public String showTable(Model model){
         List<TableEntity> list=tableRepository.findByIsReserved(false);
       model.addAttribute("list", list);
         return "guestAvailableTable";
     }
-
-
-    @RequestMapping("/adminDisplayTable")
-    public String adminTableDisplay(Model model){
-        List<TableEntity> list=tableRepository.findAll();
-        model.addAttribute("list", list);
-
-        return "deleteTable";
-    }
-
-    @RequestMapping("deleteTable")
-    public String deleteTable(@RequestParam(name="tid")String tid,Model map){
-  int ti=Integer.parseInt(tid);
-   //TableEntity e =tableRepository.findById(ti).get();
-   tableRepository.deleteById(ti);
-   List<TableEntity> list=tableRepository.findAll();
-   map.addAttribute("list", list);
-       return "deleteTable";
-    }
+    */
 
 }
 
