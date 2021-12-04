@@ -64,7 +64,7 @@ public class LoginControllerTests {
     }
 
     @Test
-    public void loginSubmitShouldOpenLoginIfLoginSucceeded() throws Exception {
+    public void loginSubmitShouldOpenReservationHistoryIfLoginSucceeded() throws Exception {
         UserEntity loginUser = new UserEntity();
         loginUser.setUserId(1);
         loginUser.setUsername("group9");
