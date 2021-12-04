@@ -18,6 +18,7 @@
          <th scope="col">Table ID---</th>
          <th scope="col">Table Capacity---</th>
          <th scope="col">Is Table Reserved---</th>
+         <th scope="col">Action</th>
          
          
         </thead><br>
@@ -26,7 +27,7 @@
           <td th:text="${list.getTable_id()}" ></td>
           <td th:text="${list.getCapacity()}"></td>
           <td th:text="${list.isReserved()}"></td>
-          
+          <td ><button><a href="#" th:href="@{/deleteTable(tid=${list.getTable_id()})}" >Delete Table</a></button></td>
       </tr>
 
 
@@ -38,16 +39,7 @@
 <center>
 <pre>
 
-<<<<<<< HEAD
-    <td >
-        <label>Reserve a table</label>
-        <button><a href="reservation">Reserve Table</a></button>
-        <label>Are you sure you do not want to register?</label>
-        <button><a href="registration">Register</a></button>
-    </td>
-=======
-    <td ><button><a href="reservation"   >Reserve Table</a></button> </td>
->>>>>>> experimental
+
 
 
 </pre>

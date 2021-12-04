@@ -63,18 +63,40 @@ public String showAddTable(Model map, HttpServletRequest request){
 }
 
 
+
+
+
+
+
 // this method will get Table Information from addtable html
 // Save the information to Database on Table Entity 
 @PostMapping("/saveTable")
-public String insertTableDB(@ModelAttribute("tableModel")TableModel tableModel, ModelMap model){
+public String insertTableDB(@RequestParam(name="capacity")String capacity,@RequestParam(name="isReserved")String reserve, ModelMap model){
+  int cap=Integer.parseInt(capacity);
+  boolean isReseved=Boolean.parseBoolean(reserve);
+  if(cap>8 || cap<1 ){
+   
+    return "addTable";
+  }
+  
+  
+ 
+
 TableEntity tableEntity= new TableEntity();
-tableEntity.setCapacity(tableModel.getCapacity());
-tableEntity.setReserved(tableModel.isReserved());
+tableEntity.setCapacity(cap);
+tableEntity.setReserved(isReseved);
 tableRepository.save(tableEntity);
+
 String message ="Your Information is Successfully  Save to Our System ";
 model.addAttribute("msg", message);
 return "addTable";
+
 }
+
+
+
+
+
 
 
 //This Method will Show all the Table on the system 
