@@ -71,8 +71,6 @@ public class LoginController {
         return "guestAvailableTable";
     }
 
-<<<<<<< HEAD
-=======
 
     @RequestMapping("/adminDisplayTable")
     public String adminTableDisplay(Model model){
@@ -92,6 +90,5 @@ public class LoginController {
        return "deleteTable";
     }
 
->>>>>>> experimental
 }
 
