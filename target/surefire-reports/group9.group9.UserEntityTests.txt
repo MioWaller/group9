@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: group9.group9.UserEntityTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s - in group9.group9.UserEntityTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s - in group9.group9.UserEntityTests

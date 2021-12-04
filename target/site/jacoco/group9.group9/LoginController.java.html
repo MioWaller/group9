@@ -18,60 +18,61 @@ import org.springframework.web.bind.annotation.RequestMapping;
     @Autowired
     private UserRepository userRepository;
 
+    /*
     @Autowired 
-    TableController tableController;
+    LoginController loginController;
 
     @Autowired
     TableRepository tableRepository;
+    */
 
     @GetMapping(&quot;/login&quot;)
 	public String login(Model model) {
-<span class="nc" id="L29">        LoginModel loginModel = new LoginModel();</span>
-<span class="nc" id="L30">        model.addAttribute(&quot;loginModel&quot;, loginModel);</span>
+<span class="fc" id="L31">        LoginModel loginModel = new LoginModel();</span>
+<span class="fc" id="L32">        model.addAttribute(&quot;loginModel&quot;, loginModel);</span>
         
         //tableController.combineTable(6);
         
-<span class="nc" id="L34">        return &quot;login&quot;;</span>
+<span class="fc" id="L36">        return &quot;login&quot;;</span>
 	}
 
     @PostMapping(&quot;/login&quot;)
     public String loginSubmit(@ModelAttribute LoginModel loginModel, HttpServletResponse response) {
 
-<span class="nc" id="L40">       List&lt; UserEntity&gt; users = userRepository.findByUsername(loginModel.getUsername());</span>
+<span class="fc" id="L42">       List&lt; UserEntity&gt; users = userRepository.findByUsername(loginModel.getUsername());</span>
 
-<span class="nc bnc" id="L42" title="All 2 branches missed.">        if (users.isEmpty()) {</span>
-<span class="nc" id="L43">            return &quot;redirect:/login&quot;;</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">        if (users.isEmpty()) {</span>
+<span class="fc" id="L45">            return &quot;redirect:/login&quot;;</span>
         }
         
-<span class="nc bnc" id="L46" title="All 2 branches missed.">        if(users.get(0).isAdmin()==true){</span>
+<span class="pc bpc" id="L48" title="1 of 2 branches missed.">        if(users.get(0).isAdmin()==true){</span>
 
-<span class="nc" id="L48">            return &quot;addTable&quot;;</span>
+<span class="nc" id="L50">            return &quot;addTable&quot;;</span>
         }
 
         
-<span class="nc" id="L52">        UserEntity user = users.get(0);</span>
+<span class="fc" id="L54">        UserEntity user = users.get(0);</span>
 
-<span class="nc" id="L54">        String hash = PasswordEncryption.hash(loginModel.getPassword());</span>
+<span class="fc" id="L56">        String hash = PasswordEncryption.hash(loginModel.getPassword());</span>
 
-<span class="nc bnc" id="L56" title="All 2 branches missed.">        if (!user.getPassword().equals(hash)) {</span>
-<span class="nc" id="L57">            return &quot;redirect:/login&quot;;</span>
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">        if (!user.getPassword().equals(hash)) {</span>
+<span class="nc" id="L59">            return &quot;redirect:/login&quot;;</span>
         }
 
-<span class="nc" id="L60">        Cookie cookie = new Cookie(&quot;user-id&quot;, user.getId().toString());</span>
-<span class="nc" id="L61">        response.addCookie(cookie);</span>
+<span class="fc" id="L62">        Cookie cookie = new Cookie(&quot;user-id&quot;, user.getId().toString());</span>
+<span class="fc" id="L63">        response.addCookie(cookie);</span>
 
-<span class="nc" id="L63">        return &quot;redirect:/reservationhistory&quot;;</span>
+<span class="fc" id="L65">        return &quot;redirect:/reservationhistory&quot;;</span>
     }
 
-    @RequestMapping(&quot;/continueGuest&quot;)
+    /*
+    @RequestMapping(&quot;/guestAvailableTable&quot;)
     public String showTable(Model model){
-<span class="nc" id="L68">        List&lt;TableEntity&gt; list=tableRepository.findByIsReserved(false);</span>
-<span class="nc" id="L69">      model.addAttribute(&quot;list&quot;, list);</span>
-<span class="nc" id="L70">        return &quot;guestAvailableTable&quot;;</span>
+        List&lt;TableEntity&gt; list=tableRepository.findByIsReserved(false);
+      model.addAttribute(&quot;list&quot;, list);
+        return &quot;guestAvailableTable&quot;;
     }
-
-
-    
+    */
 
 }
 
