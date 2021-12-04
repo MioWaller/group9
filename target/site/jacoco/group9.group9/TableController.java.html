@@ -63,78 +63,100 @@ public String showAddTable(Model map, HttpServletRequest request){
 }
 
 
+
+
+
+
+
 // this method will get Table Information from addtable html
 // Save the information to Database on Table Entity 
 @PostMapping(&quot;/saveTable&quot;)
-public String insertTableDB(@ModelAttribute(&quot;tableModel&quot;)TableModel tableModel, ModelMap model){
-<span class="nc" id="L70">TableEntity tableEntity= new TableEntity();</span>
-<span class="nc" id="L71">tableEntity.setCapacity(tableModel.getCapacity());</span>
-<span class="nc" id="L72">tableEntity.setReserved(tableModel.isReserved());</span>
-<span class="nc" id="L73">tableRepository.save(tableEntity);</span>
-<span class="nc" id="L74">String message =&quot;Your Information is Successfully  Save to Our System &quot;;</span>
-<span class="nc" id="L75">model.addAttribute(&quot;msg&quot;, message);</span>
-<span class="nc" id="L76">return &quot;addTable&quot;;</span>
+public String insertTableDB(@RequestParam(name=&quot;capacity&quot;)String capacity,@RequestParam(name=&quot;isReserved&quot;)String reserve, ModelMap model){
+<span class="nc" id="L75">  int cap=Integer.parseInt(capacity);</span>
+<span class="nc" id="L76">  boolean isReseved=Boolean.parseBoolean(reserve);</span>
+<span class="nc bnc" id="L77" title="All 4 branches missed.">  if(cap&gt;8 || cap&lt;1 ){</span>
+   
+<span class="nc" id="L79">    return &quot;addTable&quot;;</span>
+  }
+  
+  
+ 
+
+<span class="nc" id="L85">TableEntity tableEntity= new TableEntity();</span>
+<span class="nc" id="L86">tableEntity.setCapacity(cap);</span>
+<span class="nc" id="L87">tableEntity.setReserved(isReseved);</span>
+<span class="nc" id="L88">tableRepository.save(tableEntity);</span>
+
+<span class="nc" id="L90">String message =&quot;Your Information is Successfully  Save to Our System &quot;;</span>
+<span class="nc" id="L91">model.addAttribute(&quot;msg&quot;, message);</span>
+<span class="nc" id="L92">return &quot;addTable&quot;;</span>
+
 }
+
+
+
+
+
 
 
 //This Method will Show all the Table on the system 
 @RequestMapping(&quot;/displayTable&quot;)
 public String displayAvailableTable(ModelMap model){
-<span class="nc" id="L83">    List&lt;TableEntity&gt; tableList= tableRepository.findAll();</span>
+<span class="nc" id="L105">    List&lt;TableEntity&gt; tableList= tableRepository.findAll();</span>
 
-<span class="nc" id="L85">     model.addAttribute(&quot;list&quot;, tableList);</span>
-<span class="nc" id="L86">    return &quot;displayAvailableTable&quot;;</span>
+<span class="nc" id="L107">     model.addAttribute(&quot;list&quot;, tableList);</span>
+<span class="nc" id="L108">    return &quot;displayAvailableTable&quot;;</span>
 
     
 }
 
 @RequestMapping(&quot;/selectTable&quot;)
 public String selectTable(@RequestParam(name=&quot;tid&quot;)String tid,Model model,HttpServletRequest request){
-<span class="nc" id="L93">    int id=Integer.parseInt(tid);</span>
-<span class="nc" id="L94">    TableEntity tableList= tableRepository.findById(id).get();</span>
-<span class="nc" id="L95">  System.out.println(&quot;Table id IS ---&quot;+ id +&quot;\n\n\n\n&quot;);</span>
+<span class="nc" id="L115">    int id=Integer.parseInt(tid);</span>
+<span class="nc" id="L116">    TableEntity tableList= tableRepository.findById(id).get();</span>
+<span class="nc" id="L117">  System.out.println(&quot;Table id IS ---&quot;+ id +&quot;\n\n\n\n&quot;);</span>
     //ReservationEntity reservationEntity= new ReservationEntity();
     //reservationEntity.setTableId(id);
    
-<span class="nc" id="L99">    Cookie cookie1[] = request.getCookies();</span>
-<span class="nc" id="L100">    String userid=&quot;&quot;;</span>
-<span class="nc bnc" id="L101" title="All 2 branches missed.">    for(int i=0; i&lt;cookie1.length; i++) {</span>
-<span class="nc" id="L102">        userid = cookie1[i].getValue();</span>
+<span class="nc" id="L121">    Cookie cookie1[] = request.getCookies();</span>
+<span class="nc" id="L122">    String userid=&quot;&quot;;</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">    for(int i=0; i&lt;cookie1.length; i++) {</span>
+<span class="nc" id="L124">        userid = cookie1[i].getValue();</span>
         try{
-<span class="nc" id="L104">            Integer.parseInt(userid);</span>
-<span class="nc" id="L105">        }</span>
-<span class="nc" id="L106">        catch(NumberFormatException e)</span>
+<span class="nc" id="L126">            Integer.parseInt(userid);</span>
+<span class="nc" id="L127">        }</span>
+<span class="nc" id="L128">        catch(NumberFormatException e)</span>
         {
-<span class="nc" id="L108">            userid=null;</span>
+<span class="nc" id="L130">            userid=null;</span>
         }
-<span class="nc bnc" id="L110" title="All 2 branches missed.">        if(userid != null)</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">        if(userid != null)</span>
         {
-<span class="nc" id="L112">            break;</span>
+<span class="nc" id="L134">            break;</span>
         }
     }
     
-<span class="nc" id="L116">    List&lt;ReservationEntity&gt; usersReservation = reservationRepository.findByUserid(Integer.parseInt(userid));</span>
+<span class="nc" id="L138">    List&lt;ReservationEntity&gt; usersReservation = reservationRepository.findByUserid(Integer.parseInt(userid));</span>
   ///checking is holiday or not
 
 
   
 
-<span class="nc" id="L122">    String date = usersReservation.get(0).getDate();</span>
-<span class="nc" id="L123">    System.out.println(&quot;Date zis ======= &quot;+date+&quot;     -----\n\n\n\n\n\n\n&quot;);</span>
+<span class="nc" id="L144">    String date = usersReservation.get(0).getDate();</span>
+<span class="nc" id="L145">    System.out.println(&quot;Date zis ======= &quot;+date+&quot;     -----\n\n\n\n\n\n\n&quot;);</span>
 
 ///
-<span class="nc" id="L126">     HolidayEntity he=holidayRepository.findByDate(date);</span>
-<span class="nc" id="L127">         boolean flag=he.isHoliday();</span>
+<span class="nc" id="L148">     HolidayEntity he=holidayRepository.findByDate(date);</span>
+<span class="nc" id="L149">         boolean flag=he.isHoliday();</span>
 
-<span class="nc bnc" id="L129" title="All 2 branches missed.">      if(checkHoliday==false){</span>
-<span class="nc" id="L130">         System.out.println(flag);</span>
-<span class="nc bnc" id="L131" title="All 2 branches missed.">         if(flag==true){</span>
-<span class="nc" id="L132">             ReservationEntity re= new ReservationEntity();</span>
-<span class="nc" id="L133">            re.setHoliday(true);</span>
-<span class="nc" id="L134">            reservationRepository.save(re);</span>
-<span class="nc" id="L135">            checkHoliday=true;</span>
-<span class="nc" id="L136">            model.addAttribute(&quot;tid&quot;,id);</span>
-<span class="nc" id="L137">            return &quot;payment&quot;;</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">      if(checkHoliday==false){</span>
+<span class="nc" id="L152">         System.out.println(flag);</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">         if(flag==true){</span>
+<span class="nc" id="L154">             ReservationEntity re= new ReservationEntity();</span>
+<span class="nc" id="L155">            re.setHoliday(true);</span>
+<span class="nc" id="L156">            reservationRepository.save(re);</span>
+<span class="nc" id="L157">            checkHoliday=true;</span>
+<span class="nc" id="L158">            model.addAttribute(&quot;tid&quot;,id);</span>
+<span class="nc" id="L159">            return &quot;payment&quot;;</span>
         }
 
     }
@@ -144,10 +166,10 @@ public String selectTable(@RequestParam(name=&quot;tid&quot;)String tid,Model mo
 
   
 
-<span class="nc" id="L147">    String time = usersReservation.get(0).getTime();</span>
-<span class="nc" id="L148">    String email=usersReservation.get(0).getEmail();</span>
-<span class="nc" id="L149">    String fname=usersReservation.get(0).getFullName();</span>
-<span class="nc" id="L150">    String phone=usersReservation.get(0).getPhoneNumber();</span>
+<span class="nc" id="L169">    String time = usersReservation.get(0).getTime();</span>
+<span class="nc" id="L170">    String email=usersReservation.get(0).getEmail();</span>
+<span class="nc" id="L171">    String fname=usersReservation.get(0).getFullName();</span>
+<span class="nc" id="L172">    String phone=usersReservation.get(0).getPhoneNumber();</span>
       
 
     
@@ -171,17 +193,17 @@ public String selectTable(@RequestParam(name=&quot;tid&quot;)String tid,Model mo
            // usersReservation.get(0).setTableId(id);
         //}
       
-<span class="nc" id="L174">        System.out.println(userid);</span>
-<span class="nc" id="L175">        int userId=Integer.parseInt(userid);</span>
+<span class="nc" id="L196">        System.out.println(userid);</span>
+<span class="nc" id="L197">        int userId=Integer.parseInt(userid);</span>
 
 
         //System.out.println(userId+&quot;User id is =-------&quot;);
         
-<span class="nc" id="L180">        TableEntity tableInfo= tableRepository.findById(id).get();</span>
+<span class="nc" id="L202">        TableEntity tableInfo= tableRepository.findById(id).get();</span>
            
-<span class="nc" id="L182">        int noOfGuest=tableInfo.getCapacity();</span>
-<span class="nc" id="L183">        tableInfo.setReserved(true);</span>
-<span class="nc" id="L184">        tableRepository.save(tableInfo);</span>
+<span class="nc" id="L204">        int noOfGuest=tableInfo.getCapacity();</span>
+<span class="nc" id="L205">        tableInfo.setReserved(true);</span>
+<span class="nc" id="L206">        tableRepository.save(tableInfo);</span>
 
         //System.out.println(tableInfo+&quot; Table Information ------&quot;);
 
@@ -189,43 +211,43 @@ public String selectTable(@RequestParam(name=&quot;tid&quot;)String tid,Model mo
     
 
 
-<span class="nc" id="L192">    ReservationEntity reservationEntity= new ReservationEntity();</span>
+<span class="nc" id="L214">    ReservationEntity reservationEntity= new ReservationEntity();</span>
     //HolidayEntity he=holidayRepository.findByDate(date);
     //boolean holiday=he.isHoliday();
     
     
     
-<span class="nc" id="L198">    reservationEntity.setDate(date);</span>
-<span class="nc" id="L199">    reservationEntity.setEmail(email);</span>
-<span class="nc" id="L200">    reservationEntity.setFullName(fname);</span>
-<span class="nc" id="L201">    reservationEntity.setNumOfGuests(noOfGuest);</span>
-<span class="nc" id="L202">    reservationEntity.setPhoneNumber(phone);</span>
-<span class="nc" id="L203">    reservationEntity.setTableId(id);</span>
+<span class="nc" id="L220">    reservationEntity.setDate(date);</span>
+<span class="nc" id="L221">    reservationEntity.setEmail(email);</span>
+<span class="nc" id="L222">    reservationEntity.setFullName(fname);</span>
+<span class="nc" id="L223">    reservationEntity.setNumOfGuests(noOfGuest);</span>
+<span class="nc" id="L224">    reservationEntity.setPhoneNumber(phone);</span>
+<span class="nc" id="L225">    reservationEntity.setTableId(id);</span>
     
 
 
-<span class="nc" id="L207">    reservationEntity.setTime(time);</span>
-<span class="nc" id="L208">    reservationEntity.setUserId(userId);</span>
+<span class="nc" id="L229">    reservationEntity.setTime(time);</span>
+<span class="nc" id="L230">    reservationEntity.setUserId(userId);</span>
    // tableList.setReserved(true);
     //tableRepository.save(tableList);
-<span class="nc" id="L211">    reservationRepository.save(reservationEntity);</span>
+<span class="nc" id="L233">    reservationRepository.save(reservationEntity);</span>
      
-<span class="nc" id="L213">    List&lt;ReservationEntity&gt; list=reservationRepository.findByUserid(userId);</span>
+<span class="nc" id="L235">    List&lt;ReservationEntity&gt; list=reservationRepository.findByUserid(userId);</span>
     
 
-<span class="nc" id="L216">    model.addAttribute(&quot;list&quot;,list );</span>
+<span class="nc" id="L238">    model.addAttribute(&quot;list&quot;,list );</span>
     //if(holiday){
 
       //  return &quot;payment&quot;;
     //}
 
-<span class="nc" id="L222">    return &quot;reservationHistory&quot;;</span>
+<span class="nc" id="L244">    return &quot;reservationHistory&quot;;</span>
 }
 
 @RequestMapping(&quot;/checkReservation&quot;)
 public String checkReservation(Model map){
     
-<span class="nc" id="L228">    return &quot;allReservation&quot;;</span>
+<span class="nc" id="L250">    return &quot;allReservation&quot;;</span>
 }
 
 
@@ -242,169 +264,169 @@ public String checkReservation(Model map){
 public String combineTable( @RequestParam(name=&quot;num&quot;)String num, Model map,HttpServletRequest request){
     ////User an only combine table if the User needed table is not Avialable 
 
-<span class="nc" id="L245">    int ng=Integer.parseInt(num);</span>
-<span class="nc" id="L246">    List&lt;TableEntity&gt; tc =tableRepository.findByCapacityAndIsReserved(ng,false);</span>
-<span class="nc" id="L247">    List&lt;TableEntity&gt; t1=null;</span>
-<span class="nc" id="L248">    List&lt;TableEntity&gt; t2=null;</span>
-<span class="nc bnc" id="L249" title="All 2 branches missed.">     if(!tc.isEmpty()){</span>
-<span class="nc" id="L250">        List&lt;TableEntity&gt; tableList= tableRepository.findByIsReserved(false);</span>
-<span class="nc" id="L251">        map.addAttribute(&quot;list&quot;, tableList);</span>
-<span class="nc" id="L252">      return &quot;displayAvailableTable&quot;;</span>
+<span class="nc" id="L267">    int ng=Integer.parseInt(num);</span>
+<span class="nc" id="L268">    List&lt;TableEntity&gt; tc =tableRepository.findByCapacityAndIsReserved(ng,false);</span>
+<span class="nc" id="L269">    List&lt;TableEntity&gt; t1=null;</span>
+<span class="nc" id="L270">    List&lt;TableEntity&gt; t2=null;</span>
+<span class="nc bnc" id="L271" title="All 2 branches missed.">     if(!tc.isEmpty()){</span>
+<span class="nc" id="L272">        List&lt;TableEntity&gt; tableList= tableRepository.findByIsReserved(false);</span>
+<span class="nc" id="L273">        map.addAttribute(&quot;list&quot;, tableList);</span>
+<span class="nc" id="L274">      return &quot;displayAvailableTable&quot;;</span>
      }
       
-<span class="nc bnc" id="L255" title="All 4 branches missed.">     if(ng&gt;8 || ng&lt;1){</span>
-<span class="nc" id="L256">        List&lt;TableEntity&gt; tableList= tableRepository.findByIsReserved(false);</span>
-<span class="nc" id="L257">        map.addAttribute(&quot;list&quot;, tableList);</span>
-<span class="nc" id="L258">      return &quot;displayAvailableTable&quot;; </span>
+<span class="nc bnc" id="L277" title="All 4 branches missed.">     if(ng&gt;8 || ng&lt;1){</span>
+<span class="nc" id="L278">        List&lt;TableEntity&gt; tableList= tableRepository.findByIsReserved(false);</span>
+<span class="nc" id="L279">        map.addAttribute(&quot;list&quot;, tableList);</span>
+<span class="nc" id="L280">      return &quot;displayAvailableTable&quot;; </span>
      }
 
 
 
-<span class="nc" id="L263">    List&lt;Integer&gt; listTid=new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L264">int guest=Integer.parseInt(num);</span>
-<span class="nc bnc" id="L265" title="All 2 branches missed.">if(guest%2!=0){</span>
-<span class="nc" id="L266">    guest++;</span>
+<span class="nc" id="L285">    List&lt;Integer&gt; listTid=new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L286">int guest=Integer.parseInt(num);</span>
+<span class="nc bnc" id="L287" title="All 2 branches missed.">if(guest%2!=0){</span>
+<span class="nc" id="L288">    guest++;</span>
 }
 
-<span class="nc bnc" id="L269" title="All 4 branches missed.">if(guest&gt;2 &amp;&amp; guest&lt;9){</span>
+<span class="nc bnc" id="L291" title="All 4 branches missed.">if(guest&gt;2 &amp;&amp; guest&lt;9){</span>
 
 
-<span class="nc bnc" id="L272" title="All 2 branches missed.">if(guest==8){</span>
-<span class="nc" id="L273">    t1= tableRepository.findByCapacityAndIsReserved(6, false);</span>
-<span class="nc" id="L274">    t2= tableRepository.findByCapacityAndIsReserved(2, false);</span>
-<span class="nc bnc" id="L275" title="All 4 branches missed.">   if(t1.size()==0 || t2.size()==0){///////////////////////</span>
-<span class="nc" id="L276">    List&lt;TableEntity&gt; tableList= tableRepository.findByIsReserved(false);</span>
-<span class="nc" id="L277">    map.addAttribute(&quot;list&quot;, tableList);</span>
-<span class="nc" id="L278">     return &quot;displayAvailableTable&quot;;</span>
+<span class="nc bnc" id="L294" title="All 2 branches missed.">if(guest==8){</span>
+<span class="nc" id="L295">    t1= tableRepository.findByCapacityAndIsReserved(6, false);</span>
+<span class="nc" id="L296">    t2= tableRepository.findByCapacityAndIsReserved(2, false);</span>
+<span class="nc bnc" id="L297" title="All 4 branches missed.">   if(t1.size()==0 || t2.size()==0){///////////////////////</span>
+<span class="nc" id="L298">    List&lt;TableEntity&gt; tableList= tableRepository.findByIsReserved(false);</span>
+<span class="nc" id="L299">    map.addAttribute(&quot;list&quot;, tableList);</span>
+<span class="nc" id="L300">     return &quot;displayAvailableTable&quot;;</span>
    }
-<span class="nc" id="L280">   listTid.add(t1.get(0).getTable_id());</span>
-<span class="nc" id="L281">   listTid.add(t2.get(0).getTable_id());</span>
+<span class="nc" id="L302">   listTid.add(t1.get(0).getTable_id());</span>
+<span class="nc" id="L303">   listTid.add(t2.get(0).getTable_id());</span>
 
 
-<span class="nc" id="L284">}</span>
-<span class="nc bnc" id="L285" title="All 2 branches missed.">else if(guest==6){</span>
-<span class="nc" id="L286">     t1= tableRepository.findByCapacityAndIsReserved(4, false);</span>
-<span class="nc" id="L287">     t2= tableRepository.findByCapacityAndIsReserved(2, false);</span>
-<span class="nc bnc" id="L288" title="All 4 branches missed.">    if(t1.size()==0 || t2.size()==0){///////////////////////</span>
-<span class="nc" id="L289">        List&lt;TableEntity&gt; tableList= tableRepository.findByIsReserved(false);</span>
-<span class="nc" id="L290">        map.addAttribute(&quot;list&quot;, tableList);</span>
-<span class="nc" id="L291">         return &quot;displayAvailableTable&quot;;</span>
+<span class="nc" id="L306">}</span>
+<span class="nc bnc" id="L307" title="All 2 branches missed.">else if(guest==6){</span>
+<span class="nc" id="L308">     t1= tableRepository.findByCapacityAndIsReserved(4, false);</span>
+<span class="nc" id="L309">     t2= tableRepository.findByCapacityAndIsReserved(2, false);</span>
+<span class="nc bnc" id="L310" title="All 4 branches missed.">    if(t1.size()==0 || t2.size()==0){///////////////////////</span>
+<span class="nc" id="L311">        List&lt;TableEntity&gt; tableList= tableRepository.findByIsReserved(false);</span>
+<span class="nc" id="L312">        map.addAttribute(&quot;list&quot;, tableList);</span>
+<span class="nc" id="L313">         return &quot;displayAvailableTable&quot;;</span>
     }
-<span class="nc" id="L293">    listTid.add(t1.get(0).getTable_id());</span>
-<span class="nc" id="L294">    listTid.add(t2.get(0).getTable_id());</span>
-<span class="nc" id="L295">}</span>
+<span class="nc" id="L315">    listTid.add(t1.get(0).getTable_id());</span>
+<span class="nc" id="L316">    listTid.add(t2.get(0).getTable_id());</span>
+<span class="nc" id="L317">}</span>
 
 else{// guest ===4
 
-<span class="nc" id="L299">    t1= tableRepository.findByCapacityAndIsReserved(2, false);</span>
-<span class="nc" id="L300">    t2= tableRepository.findByCapacityAndIsReserved(2, false);</span>
+<span class="nc" id="L321">    t1= tableRepository.findByCapacityAndIsReserved(2, false);</span>
+<span class="nc" id="L322">    t2= tableRepository.findByCapacityAndIsReserved(2, false);</span>
 
   
-<span class="nc bnc" id="L303" title="All 4 branches missed.">    if(t1.size()==0 || t2.size()==0){</span>
-<span class="nc" id="L304">        List&lt;TableEntity&gt; tableList= tableRepository.findByIsReserved(false);</span>
-<span class="nc" id="L305">        map.addAttribute(&quot;list&quot;, tableList);</span>
-<span class="nc" id="L306">         return &quot;displayAvailableTable&quot;;</span>
+<span class="nc bnc" id="L325" title="All 4 branches missed.">    if(t1.size()==0 || t2.size()==0){</span>
+<span class="nc" id="L326">        List&lt;TableEntity&gt; tableList= tableRepository.findByIsReserved(false);</span>
+<span class="nc" id="L327">        map.addAttribute(&quot;list&quot;, tableList);</span>
+<span class="nc" id="L328">         return &quot;displayAvailableTable&quot;;</span>
        }
-<span class="nc" id="L308">    listTid.add(t1.get(0).getTable_id());</span>
-<span class="nc" id="L309">    listTid.add(t2.get(0).getTable_id());</span>
+<span class="nc" id="L330">    listTid.add(t1.get(0).getTable_id());</span>
+<span class="nc" id="L331">    listTid.add(t2.get(0).getTable_id());</span>
 
 }
 
-<span class="nc" id="L313">}</span>
+<span class="nc" id="L335">}</span>
 else{
 
-<span class="nc" id="L316">    return &quot;displayAvailableTable&quot;;  </span>
+<span class="nc" id="L338">    return &quot;displayAvailableTable&quot;;  </span>
 }
-<span class="nc" id="L318">System.out.println(&quot;List if Table Id Is --&quot;);</span>
-<span class="nc" id="L319">System.out.println(listTid);</span>
-<span class="nc" id="L320">map.addAttribute(&quot;list&quot;, listTid);</span>
+<span class="nc" id="L340">System.out.println(&quot;List if Table Id Is --&quot;);</span>
+<span class="nc" id="L341">System.out.println(listTid);</span>
+<span class="nc" id="L342">map.addAttribute(&quot;list&quot;, listTid);</span>
 
-<span class="nc" id="L322">int tableNo1=listTid.get(0);</span>
-<span class="nc" id="L323">int tableNo2=listTid.get(1);</span>
-<span class="nc" id="L324">  TableEntity firstTable=tableRepository.findById(tableNo1).get();</span>
-<span class="nc" id="L325">  TableEntity secondTable=tableRepository.findById(tableNo2).get();</span>
+<span class="nc" id="L344">int tableNo1=listTid.get(0);</span>
+<span class="nc" id="L345">int tableNo2=listTid.get(1);</span>
+<span class="nc" id="L346">  TableEntity firstTable=tableRepository.findById(tableNo1).get();</span>
+<span class="nc" id="L347">  TableEntity secondTable=tableRepository.findById(tableNo2).get();</span>
 
-<span class="nc" id="L327">  int table1Guest=firstTable.getCapacity();</span>
-<span class="nc" id="L328">  int table2Guest=secondTable.getCapacity();</span>
+<span class="nc" id="L349">  int table1Guest=firstTable.getCapacity();</span>
+<span class="nc" id="L350">  int table2Guest=secondTable.getCapacity();</span>
 
-<span class="nc" id="L330">  Cookie cookie1[] = request.getCookies();</span>
-<span class="nc" id="L331">  String userid=&quot;&quot;;</span>
-<span class="nc bnc" id="L332" title="All 2 branches missed.">  for(int i=0; i&lt;cookie1.length; i++) {</span>
-<span class="nc" id="L333">      userid = cookie1[i].getValue();</span>
+<span class="nc" id="L352">  Cookie cookie1[] = request.getCookies();</span>
+<span class="nc" id="L353">  String userid=&quot;&quot;;</span>
+<span class="nc bnc" id="L354" title="All 2 branches missed.">  for(int i=0; i&lt;cookie1.length; i++) {</span>
+<span class="nc" id="L355">      userid = cookie1[i].getValue();</span>
       try{
-<span class="nc" id="L335">          Integer.parseInt(userid);</span>
-<span class="nc" id="L336">      }</span>
-<span class="nc" id="L337">      catch(NumberFormatException e)</span>
+<span class="nc" id="L357">          Integer.parseInt(userid);</span>
+<span class="nc" id="L358">      }</span>
+<span class="nc" id="L359">      catch(NumberFormatException e)</span>
       {
-<span class="nc" id="L339">          userid=null;</span>
+<span class="nc" id="L361">          userid=null;</span>
       }
-<span class="nc bnc" id="L341" title="All 2 branches missed.">      if(userid != null)</span>
+<span class="nc bnc" id="L363" title="All 2 branches missed.">      if(userid != null)</span>
       {
-<span class="nc" id="L343">          break;</span>
+<span class="nc" id="L365">          break;</span>
       }
   }
 
-<span class="nc" id="L347">    List&lt;ReservationEntity&gt; usersReservation = reservationRepository.findByUserid(Integer.parseInt(userid));</span>
-<span class="nc" id="L348">    String date = usersReservation.get(0).getDate();</span>
-<span class="nc" id="L349">    String time = usersReservation.get(0).getTime();</span>
-<span class="nc" id="L350">    String email=usersReservation.get(0).getEmail();</span>
-<span class="nc" id="L351">    String fname=usersReservation.get(0).getFullName();</span>
-<span class="nc" id="L352">    String phone=usersReservation.get(0).getPhoneNumber();</span>
+<span class="nc" id="L369">    List&lt;ReservationEntity&gt; usersReservation = reservationRepository.findByUserid(Integer.parseInt(userid));</span>
+<span class="nc" id="L370">    String date = usersReservation.get(0).getDate();</span>
+<span class="nc" id="L371">    String time = usersReservation.get(0).getTime();</span>
+<span class="nc" id="L372">    String email=usersReservation.get(0).getEmail();</span>
+<span class="nc" id="L373">    String fname=usersReservation.get(0).getFullName();</span>
+<span class="nc" id="L374">    String phone=usersReservation.get(0).getPhoneNumber();</span>
 
-<span class="nc" id="L354">    HolidayEntity he=holidayRepository.findByDate(date);</span>
-<span class="nc" id="L355">    boolean flag=he.isHoliday();</span>
+<span class="nc" id="L376">    HolidayEntity he=holidayRepository.findByDate(date);</span>
+<span class="nc" id="L377">    boolean flag=he.isHoliday();</span>
 
 
 //////////checking holiday ///////////////////
-<span class="nc bnc" id="L359" title="All 2 branches missed."> if(checkHoliday==false){</span>
-<span class="nc" id="L360">    System.out.println(flag);</span>
-<span class="nc bnc" id="L361" title="All 2 branches missed.">    if(flag==true){</span>
-<span class="nc" id="L362">        ReservationEntity re= new ReservationEntity();</span>
-<span class="nc" id="L363">       re.setHoliday(true);</span>
-<span class="nc" id="L364">       reservationRepository.save(re);</span>
-<span class="nc" id="L365">       checkHoliday=true;</span>
-<span class="nc" id="L366">       map.addAttribute(&quot;tid&quot;,table1Guest);</span>
-<span class="nc" id="L367">       return &quot;payment&quot;;</span>
+<span class="nc bnc" id="L381" title="All 2 branches missed."> if(checkHoliday==false){</span>
+<span class="nc" id="L382">    System.out.println(flag);</span>
+<span class="nc bnc" id="L383" title="All 2 branches missed.">    if(flag==true){</span>
+<span class="nc" id="L384">        ReservationEntity re= new ReservationEntity();</span>
+<span class="nc" id="L385">       re.setHoliday(true);</span>
+<span class="nc" id="L386">       reservationRepository.save(re);</span>
+<span class="nc" id="L387">       checkHoliday=true;</span>
+<span class="nc" id="L388">       map.addAttribute(&quot;tid&quot;,table1Guest);</span>
+<span class="nc" id="L389">       return &quot;payment&quot;;</span>
    }
 }
 ////////////////////////////////////////
 
-<span class="nc" id="L372">    ReservationEntity reservationEntity= new ReservationEntity();</span>
+<span class="nc" id="L394">    ReservationEntity reservationEntity= new ReservationEntity();</span>
     //HolidayEntity he=holidayRepository.findByDate(date);
     //boolean holiday=he.isHoliday();
     
     
-<span class="nc" id="L377">    int ui=Integer.parseInt(userid);///assign User id</span>
-<span class="nc" id="L378">    reservationEntity.setDate(date);</span>
-<span class="nc" id="L379">    reservationEntity.setEmail(email);</span>
-<span class="nc" id="L380">    reservationEntity.setFullName(fname);</span>
-<span class="nc" id="L381">    reservationEntity.setNumOfGuests(table1Guest);</span>
-<span class="nc" id="L382">    reservationEntity.setPhoneNumber(phone);</span>
-<span class="nc" id="L383">    reservationEntity.setTableId(tableNo1);</span>
+<span class="nc" id="L399">    int ui=Integer.parseInt(userid);///assign User id</span>
+<span class="nc" id="L400">    reservationEntity.setDate(date);</span>
+<span class="nc" id="L401">    reservationEntity.setEmail(email);</span>
+<span class="nc" id="L402">    reservationEntity.setFullName(fname);</span>
+<span class="nc" id="L403">    reservationEntity.setNumOfGuests(table1Guest);</span>
+<span class="nc" id="L404">    reservationEntity.setPhoneNumber(phone);</span>
+<span class="nc" id="L405">    reservationEntity.setTableId(tableNo1);</span>
     
 
 
-<span class="nc" id="L387">    reservationEntity.setTime(time);</span>
-<span class="nc" id="L388">    reservationEntity.setUserId(ui);</span>
+<span class="nc" id="L409">    reservationEntity.setTime(time);</span>
+<span class="nc" id="L410">    reservationEntity.setUserId(ui);</span>
    // tableList.setReserved(true);
     //tableRepository.save(tableList);
-<span class="nc" id="L391">    reservationRepository.save(reservationEntity);</span>
-<span class="nc" id="L392">    ReservationEntity reservation= new ReservationEntity();</span>
+<span class="nc" id="L413">    reservationRepository.save(reservationEntity);</span>
+<span class="nc" id="L414">    ReservationEntity reservation= new ReservationEntity();</span>
 ////// second Time 
-<span class="nc" id="L394">    reservation.setDate(date);</span>
-<span class="nc" id="L395">    reservation.setEmail(email);</span>
-<span class="nc" id="L396">    reservation.setFullName(fname);</span>
-<span class="nc" id="L397">    reservation.setNumOfGuests(table2Guest);</span>
-<span class="nc" id="L398">    reservation.setPhoneNumber(phone);</span>
-<span class="nc" id="L399">    reservation.setTableId(tableNo2);</span>
+<span class="nc" id="L416">    reservation.setDate(date);</span>
+<span class="nc" id="L417">    reservation.setEmail(email);</span>
+<span class="nc" id="L418">    reservation.setFullName(fname);</span>
+<span class="nc" id="L419">    reservation.setNumOfGuests(table2Guest);</span>
+<span class="nc" id="L420">    reservation.setPhoneNumber(phone);</span>
+<span class="nc" id="L421">    reservation.setTableId(tableNo2);</span>
     
 
 
-<span class="nc" id="L403">    reservation.setTime(time);</span>
-<span class="nc" id="L404">    reservation.setUserId(ui);</span>
+<span class="nc" id="L425">    reservation.setTime(time);</span>
+<span class="nc" id="L426">    reservation.setUserId(ui);</span>
    // tableList.setReserved(true);
     //tableRepository.save(tableList);
-<span class="nc" id="L407">    reservationRepository.save(reservation);</span>
+<span class="nc" id="L429">    reservationRepository.save(reservation);</span>
 
 
 
@@ -421,19 +443,19 @@ else{
 
 
 
-<span class="nc" id="L424">TableEntity table1=tableRepository.findById(listTid.get(0)).get();</span>
-<span class="nc" id="L425">table1.setReserved(true);</span>
-<span class="nc" id="L426">tableRepository.save(table1);</span>
+<span class="nc" id="L446">TableEntity table1=tableRepository.findById(listTid.get(0)).get();</span>
+<span class="nc" id="L447">table1.setReserved(true);</span>
+<span class="nc" id="L448">tableRepository.save(table1);</span>
 
-<span class="nc" id="L428">TableEntity table2=tableRepository.findById(listTid.get(1)).get();</span>
-<span class="nc" id="L429">table2.setReserved(true);</span>
-<span class="nc" id="L430">tableRepository.save(table2);</span>
-<span class="nc" id="L431">List&lt;ReservationEntity&gt; list=reservationRepository.findByUserid(ui);</span>
-<span class="nc" id="L432"> map.addAttribute(&quot;list&quot;,list );</span>
+<span class="nc" id="L450">TableEntity table2=tableRepository.findById(listTid.get(1)).get();</span>
+<span class="nc" id="L451">table2.setReserved(true);</span>
+<span class="nc" id="L452">tableRepository.save(table2);</span>
+<span class="nc" id="L453">List&lt;ReservationEntity&gt; list=reservationRepository.findByUserid(ui);</span>
+<span class="nc" id="L454"> map.addAttribute(&quot;list&quot;,list );</span>
    
 
 
-<span class="nc" id="L436">return &quot;reservationHistory&quot;;</span>
+<span class="nc" id="L458">return &quot;reservationHistory&quot;;</span>
 
 
 }

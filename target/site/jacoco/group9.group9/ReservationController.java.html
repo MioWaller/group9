@@ -223,9 +223,30 @@ import java.time.LocalDate;
 
 
 
+@RequestMapping(&quot;/seeReservation&quot;)
+public String adminReservation(Model model){
+  
+  
+<span class="nc" id="L230">    model.addAttribute(&quot;list&quot;, reservationRepository.findAll());</span>
 
 
+<span class="nc" id="L233">    return &quot;allReservation&quot;;</span>
+}
 
+@RequestMapping(&quot;/deleteReservation&quot;)
+public String adminReservation(@RequestParam(name=&quot;id&quot;)String id,Model model){
+  
+<span class="nc" id="L239">    int ids=Integer.parseInt(id);</span>
+
+<span class="nc" id="L241">    reservationRepository.deleteById(ids);</span>
+  
+
+
+<span class="nc" id="L245">    model.addAttribute(&quot;list&quot;, reservationRepository.findAll());</span>
+
+
+<span class="nc" id="L248">    return &quot;allReservation&quot;;</span>
+}
 
 
 
