@@ -3,11 +3,11 @@ group9,group9.group9,PaymentModel,57,0,0,0,15,0,10,0,10,0
 group9,group9.group9,UserEntity,0,57,0,0,0,15,0,10,0,10
 group9,group9.group9,Group9Application,0,8,0,0,0,3,0,2,0,2
 group9,group9.group9,TableEntity,0,45,0,0,0,11,0,8,0,8
-group9,group9.group9,LoginController,4,58,2,4,2,14,2,4,0,3
+group9,group9.group9,LoginController,71,3,6,0,18,1,6,1,3,1
 group9,group9.group9,UserInfoEntity,0,151,0,0,0,40,0,26,0,26
 group9,group9.group9,TableModel,17,0,0,0,7,0,5,0,5,0
 group9,group9.group9,PaymentController,2,3,0,0,1,1,1,1,1,1
-group9,group9.group9,TableController,778,0,48,0,189,0,31,0,7,0
+group9,group9.group9,TableController,772,6,48,0,187,2,30,1,6,1
 group9,group9.group9,RegistrationController,2,69,1,5,1,16,1,5,0,3
 group9,group9.group9,RegistrationModel,0,17,0,0,0,7,0,5,0,5
 group9,group9.group9,ReservationModel,52,0,0,0,22,0,15,0,15,0
@@ -19,5 +19,5 @@ group9,group9.group9,ReservationEntity,0,75,0,0,0,31,0,21,0,21
 group9,group9.group9,UserInfoModel,7,59,0,0,3,25,2,17,2,17
 group9,group9.group9,ReservationHistoryController,0,46,1,3,0,15,1,3,0,2
 group9,group9.group9,LoginModel,0,17,0,0,0,7,0,5,0,5
-group9,group9.group9,ReservationController,330,0,44,0,83,0,28,0,6,0
+group9,group9.group9,ReservationController,327,3,44,0,82,1,27,1,5,1
 group9,group9.group9,ProfileController,56,338,4,44,8,87,4,25,0,5
