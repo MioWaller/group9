@@ -74,6 +74,10 @@ public String showAddTable(Model map, HttpServletRequest request){
 public String insertTableDB(@RequestParam(name="capacity")String capacity,@RequestParam(name="isReserved")String reserve, ModelMap model){
   int cap=Integer.parseInt(capacity);
   boolean isReseved=Boolean.parseBoolean(reserve);
+  if(cap>8 || cap<1 ){
+   
+    return "addTable";
+  }
   
   
  
