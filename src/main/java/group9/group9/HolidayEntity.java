@@ -50,9 +50,5 @@ public class HolidayEntity {
         return "HolidayEntity [date=" + date + ", holiday_id=" + holiday_id + ", isHoliday=" + isHoliday + "]";
     }
 
-    
-    
-
-
 
 }
