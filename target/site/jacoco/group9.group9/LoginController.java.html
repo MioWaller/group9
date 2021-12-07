@@ -18,56 +18,51 @@ import org.springframework.web.bind.annotation.RequestMapping;
     @Autowired
     private UserRepository userRepository;
 
-    /*
     @Autowired 
     TableController tableController;
 
     @Autowired
     TableRepository tableRepository;
 
-    */
-
     @GetMapping(&quot;/login&quot;)
 	public String login(Model model) {
-<span class="fc" id="L32">        LoginModel loginModel = new LoginModel();</span>
-<span class="fc" id="L33">        model.addAttribute(&quot;loginModel&quot;, loginModel);</span>
+<span class="nc" id="L29">        LoginModel loginModel = new LoginModel();</span>
+<span class="nc" id="L30">        model.addAttribute(&quot;loginModel&quot;, loginModel);</span>
         
         //tableController.combineTable(6);
         
-<span class="fc" id="L37">        return &quot;login&quot;;</span>
+<span class="nc" id="L34">        return &quot;login&quot;;</span>
 	}
 
     @PostMapping(&quot;/login&quot;)
     public String loginSubmit(@ModelAttribute LoginModel loginModel, HttpServletResponse response) {
 
-<span class="fc" id="L43">       List&lt; UserEntity&gt; users = userRepository.findByUsername(loginModel.getUsername());</span>
+<span class="nc" id="L40">       List&lt; UserEntity&gt; users = userRepository.findByUsername(loginModel.getUsername());</span>
 
-<span class="fc bfc" id="L45" title="All 2 branches covered.">        if (users.isEmpty()) {</span>
-<span class="fc" id="L46">            return &quot;redirect:/login&quot;;</span>
+<span class="nc bnc" id="L42" title="All 2 branches missed.">        if (users.isEmpty()) {</span>
+<span class="nc" id="L43">            return &quot;redirect:/login&quot;;</span>
         }
         
-<span class="fc" id="L49">        UserEntity user = users.get(0);</span>
+<span class="nc" id="L46">        UserEntity user = users.get(0);</span>
 
-<span class="fc" id="L51">        String hash = PasswordEncryption.hash(loginModel.getPassword());</span>
+<span class="nc" id="L48">        String hash = PasswordEncryption.hash(loginModel.getPassword());</span>
 
-<span class="pc bpc" id="L53" title="1 of 2 branches missed.">        if (!user.getPassword().equals(hash)) {</span>
-<span class="nc" id="L54">            return &quot;redirect:/login&quot;;</span>
+<span class="nc bnc" id="L50" title="All 2 branches missed.">        if (!user.getPassword().equals(hash)) {</span>
+<span class="nc" id="L51">            return &quot;redirect:/login&quot;;</span>
         }
 
-<span class="fc" id="L57">        Cookie cookie = new Cookie(&quot;user-id&quot;, user.getId().toString());</span>
-<span class="fc" id="L58">        response.addCookie(cookie);</span>
+<span class="nc" id="L54">        Cookie cookie = new Cookie(&quot;user-id&quot;, user.getId().toString());</span>
+<span class="nc" id="L55">        response.addCookie(cookie);</span>
 
-<span class="fc" id="L60">        return &quot;redirect:/reservationhistory&quot;;</span>
+<span class="nc" id="L57">        return &quot;redirect:/reservationhistory&quot;;</span>
     }
 
-    /*
     @RequestMapping(&quot;/guestAvailableTable&quot;)
     public String showTable(Model model){
-        List&lt;TableEntity&gt; list=tableRepository.findByIsReserved(false);
-      model.addAttribute(&quot;list&quot;, list);
-        return &quot;guestAvailableTable&quot;;
+<span class="nc" id="L62">        List&lt;TableEntity&gt; list=tableRepository.findByIsReserved(false);</span>
+<span class="nc" id="L63">      model.addAttribute(&quot;list&quot;, list);</span>
+<span class="nc" id="L64">        return &quot;guestAvailableTable&quot;;</span>
     }
-    */
 
 }
 

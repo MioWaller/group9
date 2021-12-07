@@ -7,10 +7,14 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.request;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.mysql.cj.xdevapi.Table;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
@@ -19,6 +23,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.MockBeans;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -29,14 +34,21 @@ public class LoginControllerTests {
     private LoginController controller;
 
     @Autowired
+    private TableController tableController;
+    
+    @Autowired
     private MockMvc mockMvc;
 
     @MockBean
     private UserRepository userRepository;
 
+    @MockBean
+    private TableRepository tableRepository;
+
     @Test
     public void contextLoads() {
         assertThat(controller).isNotNull();
+        assertThat(tableController).isNotNull();
     }
 
     @Test
@@ -81,6 +93,27 @@ public class LoginControllerTests {
             .param("password", "group9password"))
             .andExpect(status().is3xxRedirection())
             .andExpect(redirectedUrl("/reservationhistory"));
+    }
+
+    /*
+    @RequestMapping("/guestAvailableTable")
+    public String showTable(Model model){
+        List<TableEntity> list=tableRepository.findByIsReserved(false);
+      model.addAttribute("list", list);
+        return "guestAvailableTable";
+    }
+    */ 
+
+    @Test
+    public void continueAsAGuestShouldOpenGuestAvailableTable() throws Exception {
+        TableEntity tableEntity = new TableEntity();
+        List<TableEntity> table = new ArrayList<>();
+        table.add(tableEntity);
+        
+        mockMvc.perform(post("/guestAvailableTable")
+            .contentType(MediaType.APPLICATION_FORM_URLENCODED))
+            .andExpect(status().is3xxRedirection())
+            .andExpect(redirectedUrl("/guestAvailableTable"));
     }
 }
 
