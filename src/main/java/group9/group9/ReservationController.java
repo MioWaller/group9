@@ -89,6 +89,9 @@ public class ReservationController {
     @RequestMapping(value = "/reservation", method = RequestMethod.POST, params = "showAvailableTables")
     public String showAvailableTables(Model model, @ModelAttribute ReservationModel reservationModel, HttpServletRequest request) {
         
+
+
+        
         /* input validation for reservation variable go here */
         //also check for table availability
         if (reservationModel.getFullName() == "" || 
@@ -216,5 +219,50 @@ public class ReservationController {
     }
      
     }
+
+    
+
+
+
+@RequestMapping("/seeReservation")
+public String adminReservation(Model model){
+  
+  
+    model.addAttribute("list", reservationRepository.findAll());
+
+
+    return "allReservation";
+}
+
+@RequestMapping("/deleteReservation")
+public String adminReservation(@RequestParam(name="id")String id,Model model){
+  
+    int ids=Integer.parseInt(id);
+
+    reservationRepository.deleteById(ids);
+  
+
+
+    model.addAttribute("list", reservationRepository.findAll());
+
+
+    return "allReservation";
+}
+
+
+
+
+
+@RequestMapping("/reservationOfGuest")
+	public String reservationOfGuest(Model model) {
+        
+        ReservationModel loginModel = new ReservationModel();
+        model.addAttribute("reservationModel", loginModel);
+
+        return "reservation";
+	}
+
+
+
 
 }

@@ -104,7 +104,20 @@ public String selectTable(@RequestParam(name="tid")String tid,Model model,HttpSe
 
 ///
      HolidayEntity he=holidayRepository.findByDate(date);
-         boolean flag=he.isHoliday();
+     boolean flag=false;
+     try{
+        flag=he.isHoliday();
+     }
+     catch(NullPointerException e){
+
+     }
+     finally{
+         if(he==null){
+            model.addAttribute("list", tableRepository.findByIsReserved(false));
+            return "displayAvailableTable";
+         }
+
+        }
 
       if(checkHoliday==false){
          System.out.println(flag);
@@ -294,7 +307,20 @@ int tableNo2=listTid.get(1);
     String phone=usersReservation.get(0).getPhoneNumber();
 
     HolidayEntity he=holidayRepository.findByDate(date);
-    boolean flag=he.isHoliday();
+    boolean flag=false;
+     try{
+        flag=he.isHoliday();
+     }
+     catch(NullPointerException e){
+
+     }
+     finally{
+         if(he==null){
+            map.addAttribute("list", tableRepository.findByIsReserved(false));
+            return "displayAvailableTable";
+         }
+
+        }
 
 
 //////////checking holiday ///////////////////
