@@ -71,7 +71,7 @@ public class RegistrationControllerTests {
         mockMvc.perform(post("/registration")
             .contentType(MediaType.APPLICATION_FORM_URLENCODED)
             .param("username", "group9")
-            .param("password", "password"))
+            .param("password", "group9password"))
             .andExpect(status().is3xxRedirection())
             .andExpect(redirectedUrl("/profile"));
     }

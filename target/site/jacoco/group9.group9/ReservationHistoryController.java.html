@@ -4,33 +4,39 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.List;
+
 import javax.servlet.http.*;
 
 @Controller
-<span class="fc" id="L10">public class ReservationHistoryController {</span>
+<span class="fc" id="L13">public class ReservationHistoryController {</span>
     @Autowired
     private ReservationRepository reservationRepository;
     @GetMapping(&quot;/reservationhistory&quot;)
 
     public String history(Model model, HttpServletRequest request) {
-<span class="nc" id="L16">        Cookie cookie[] = request.getCookies();</span>
-<span class="nc" id="L17">        String userid=&quot;&quot;;</span>
-<span class="nc bnc" id="L18" title="All 2 branches missed.">        for(int i=0; i&lt;cookie.length; i++) {</span>
-<span class="nc" id="L19">            userid = cookie[i].getValue();</span>
+<span class="fc" id="L19">        Cookie cookie[] = request.getCookies();</span>
+<span class="fc" id="L20">        String userid=&quot;&quot;;</span>
+<span class="pc bpc" id="L21" title="1 of 2 branches missed.">        for(int i=0; i&lt;cookie.length; i++) {</span>
+<span class="fc" id="L22">            userid = cookie[i].getValue();</span>
             try{
-<span class="nc" id="L21">                Integer.parseInt(userid);</span>
-<span class="nc" id="L22">            }</span>
-<span class="nc" id="L23">            catch(NumberFormatException e)</span>
+<span class="fc" id="L24">                Integer.parseInt(userid);</span>
+<span class="fc" id="L25">            }</span>
+<span class="fc" id="L26">            catch(NumberFormatException e)</span>
             {
-<span class="nc" id="L25">                userid=null;</span>
+<span class="fc" id="L28">                userid=null;</span>
             }
-<span class="nc bnc" id="L27" title="All 2 branches missed.">            if(userid != null)</span>
+<span class="fc bfc" id="L30" title="All 2 branches covered.">            if(userid != null)</span>
             {
-<span class="nc" id="L29">                break;</span>
+<span class="fc" id="L32">                break;</span>
             }
         }
-<span class="nc" id="L32">        model.addAttribute(&quot;quotes&quot;, reservationRepository.findByUserid(Integer.parseInt(userid)));</span>
-<span class="nc" id="L33">        return &quot;reservationHistory&quot;;</span>
+
+<span class="fc" id="L36">        int ui=Integer.parseInt(userid);</span>
+<span class="fc" id="L37">        List&lt;ReservationEntity&gt; list=reservationRepository.findByUserid(ui);</span>
+<span class="fc" id="L38">        model.addAttribute(&quot;list&quot;,list );</span>
+<span class="fc" id="L39">        return &quot;reservationHistory&quot;;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

@@ -39,17 +39,9 @@ public class UserEntity {
         this.password = password;
     }
 
-    public boolean isAdmin() {
-        return isAdmin;
-    }
-
-    public void setAdmin(boolean isAdmin) {
-        this.isAdmin = isAdmin;
-    }
-
     @Override
     public String toString() {
-        return "UserEntity [isAdmin=" + isAdmin + ", password=" + password + ", user_id (aka. id) =" + id + ", username="
+        return "UserEntity [password=" + password + ", user_id (aka. id) =" + id + ", username="
                 + username + "]";
     }
 

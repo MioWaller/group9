@@ -1,28 +1,16 @@
 -------------------------------------------------------------------------------
 Test set: group9.group9.ProfileControllerTests
 -------------------------------------------------------------------------------
-Tests run: 16, Failures: 0, Errors: 4, Skipped: 0, Time elapsed: 1.083 s <<< FAILURE! - in group9.group9.ProfileControllerTests
-profileSubmitShouldNotIncludeCookie  Time elapsed: 0.029 s  <<< ERROR!
+Tests run: 20, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0.358 s <<< FAILURE! - in group9.group9.ProfileControllerTests
+profileSubmitShouldFailOnEmptyEmail  Time elapsed: 0.001 s  <<< ERROR!
 org.springframework.web.util.NestedServletException: Request processing failed; nested exception is java.lang.NullPointerException
-	at group9.group9.ProfileControllerTests.profileSubmitShouldNotIncludeCookie(ProfileControllerTests.java:242)
+	at group9.group9.ProfileControllerTests.profileSubmitShouldFailOnEmptyEmail(ProfileControllerTests.java:234)
 Caused by: java.lang.NullPointerException
-	at group9.group9.ProfileControllerTests.profileSubmitShouldNotIncludeCookie(ProfileControllerTests.java:242)
+	at group9.group9.ProfileControllerTests.profileSubmitShouldFailOnEmptyEmail(ProfileControllerTests.java:234)
 
-profileSubmitShouldOpenFuelQuoteIfProfileSucceeded  Time elapsed: 0.009 s  <<< ERROR!
+profileSubmitShouldFailOnNonNumberPhoneNumber  Time elapsed: 0.001 s  <<< ERROR!
 org.springframework.web.util.NestedServletException: Request processing failed; nested exception is java.lang.NullPointerException
-	at group9.group9.ProfileControllerTests.profileSubmitShouldOpenFuelQuoteIfProfileSucceeded(ProfileControllerTests.java:188)
+	at group9.group9.ProfileControllerTests.profileSubmitShouldFailOnNonNumberPhoneNumber(ProfileControllerTests.java:189)
 Caused by: java.lang.NullPointerException
-	at group9.group9.ProfileControllerTests.profileSubmitShouldOpenFuelQuoteIfProfileSucceeded(ProfileControllerTests.java:188)
-
-profileShouldReturnCorrectTemplate  Time elapsed: 0.007 s  <<< ERROR!
-org.springframework.web.util.NestedServletException: Request processing failed; nested exception is java.lang.NullPointerException
-	at group9.group9.ProfileControllerTests.profileShouldReturnCorrectTemplate(ProfileControllerTests.java:46)
-Caused by: java.lang.NullPointerException
-	at group9.group9.ProfileControllerTests.profileShouldReturnCorrectTemplate(ProfileControllerTests.java:46)
-
-profileSubmitShouldCreateNewInfo  Time elapsed: 0.007 s  <<< ERROR!
-org.springframework.web.util.NestedServletException: Request processing failed; nested exception is java.lang.NullPointerException
-	at group9.group9.ProfileControllerTests.profileSubmitShouldCreateNewInfo(ProfileControllerTests.java:210)
-Caused by: java.lang.NullPointerException
-	at group9.group9.ProfileControllerTests.profileSubmitShouldCreateNewInfo(ProfileControllerTests.java:210)
+	at group9.group9.ProfileControllerTests.profileSubmitShouldFailOnNonNumberPhoneNumber(ProfileControllerTests.java:189)
 

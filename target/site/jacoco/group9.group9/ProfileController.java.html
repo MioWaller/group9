@@ -25,34 +25,34 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 <span class="fc" id="L26">        Cookie cookie1[] = request.getCookies();</span>
 <span class="fc" id="L27">        String userid=&quot;&quot;;</span>
-<span class="pc bnc" id="L28" title="All 2 branches missed.">        for(int i=0; i&lt;cookie1.length; i++) {</span>
-<span class="nc" id="L29">            userid = cookie1[i].getValue();</span>
+<span class="pc bpc" id="L28" title="1 of 2 branches missed.">        for(int i=0; i&lt;cookie1.length; i++) {</span>
+<span class="fc" id="L29">            userid = cookie1[i].getValue();</span>
             try{
-<span class="nc" id="L31">                Integer.parseInt(userid);</span>
-<span class="nc" id="L32">            }</span>
-<span class="nc" id="L33">            catch(NumberFormatException e)</span>
+<span class="fc" id="L31">                Integer.parseInt(userid);</span>
+<span class="fc" id="L32">            }</span>
+<span class="fc" id="L33">            catch(NumberFormatException e)</span>
             {
-<span class="nc" id="L35">                userid=null;</span>
+<span class="fc" id="L35">                userid=null;</span>
             }
-<span class="nc bnc" id="L37" title="All 2 branches missed.">            if(userid != null)</span>
+<span class="fc bfc" id="L37" title="All 2 branches covered.">            if(userid != null)</span>
             {
-<span class="nc" id="L39">                break;</span>
+<span class="fc" id="L39">                break;</span>
             }
         }
 
-<span class="nc" id="L43">        List&lt;UserInfoEntity&gt; userInfoEntity = userInfoRepository.findByUserid(Integer.parseInt(userid));</span>
+<span class="fc" id="L43">        List&lt;UserInfoEntity&gt; userInfoEntity = userInfoRepository.findByUserid(Integer.parseInt(userid));</span>
 
         //pre-fill client info if needed
-<span class="nc bnc" id="L46" title="All 2 branches missed.">        if (userInfoEntity.isEmpty()){</span>
-<span class="nc" id="L47">            temp.setFullName(&quot;&quot;);</span>
-<span class="nc" id="L48">            temp.setEmail(&quot;&quot;);</span>
-<span class="nc" id="L49">            temp.setPhone(&quot;&quot;);</span>
-<span class="nc" id="L50">            temp.setAddress1(&quot;&quot;);</span>
-<span class="nc" id="L51">            temp.setAddress2(&quot;&quot;);</span>
-<span class="nc" id="L52">            temp.setCity(&quot;&quot;);</span>
-<span class="nc" id="L53">            temp.setState(&quot;&quot;);</span>
-<span class="nc" id="L54">            temp.setZipcode(&quot;&quot;);</span>
-<span class="nc" id="L55">        }</span>
+<span class="pc bpc" id="L46" title="1 of 2 branches missed.">        if (userInfoEntity.isEmpty()){</span>
+<span class="fc" id="L47">            temp.setFullName(&quot;&quot;);</span>
+<span class="fc" id="L48">            temp.setEmail(&quot;&quot;);</span>
+<span class="fc" id="L49">            temp.setPhone(&quot;&quot;);</span>
+<span class="fc" id="L50">            temp.setAddress1(&quot;&quot;);</span>
+<span class="fc" id="L51">            temp.setAddress2(&quot;&quot;);</span>
+<span class="fc" id="L52">            temp.setCity(&quot;&quot;);</span>
+<span class="fc" id="L53">            temp.setState(&quot;&quot;);</span>
+<span class="fc" id="L54">            temp.setZipcode(&quot;&quot;);</span>
+<span class="fc" id="L55">        }</span>
         else{
 <span class="nc" id="L57">            temp.setFullName(userInfoEntity.get(0).getFullName());</span>
 <span class="nc" id="L58">            temp.setEmail(userInfoEntity.get(0).getEmail());</span>
@@ -64,9 +64,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 <span class="nc" id="L64">            temp.setZipcode(userInfoEntity.get(0).getZipcode());</span>
         }
 
-<span class="nc" id="L67">        model.addAttribute(&quot;temp&quot;, temp);</span>
+<span class="fc" id="L67">        model.addAttribute(&quot;temp&quot;, temp);</span>
 
-<span class="nc" id="L69">        return &quot;profile&quot;;</span>
+<span class="fc" id="L69">        return &quot;profile&quot;;</span>
 	}
 
     @PostMapping(&quot;/profile&quot;)
@@ -84,82 +84,84 @@ import org.springframework.web.bind.annotation.PostMapping;
 <span class="fc bfc" id="L84" title="All 2 branches covered.">            temp.getState().length() != 2 ||</span>
 <span class="fc bfc" id="L85" title="All 2 branches covered.">            temp.getFullName() == &quot;&quot; || </span>
 <span class="fc bfc" id="L86" title="All 2 branches covered.">            temp.getFullName().length() &gt; 50 ||</span>
-<span class="nc bnc" id="L87" title="All 2 branches missed.">            temp.getPhone().length() != 10)</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">            temp.getPhone().length() != 10)</span>
         {
 <span class="fc" id="L89">            return &quot;redirect:/profile&quot;;</span>
         }
 
         // Inputs are good, so lets fetch the cookie
-<span class="nc" id="L93">        Optional&lt;String&gt; userIdCookie = Arrays.stream(request.getCookies())</span>
-<span class="nc" id="L94">            .filter(cookie -&gt; &quot;user-id&quot;.equals(cookie.getName()))</span>
-<span class="nc" id="L95">            .map(Cookie::getValue)</span>
-<span class="nc" id="L96">            .findFirst();</span>
+<span class="fc" id="L93">        Optional&lt;String&gt; userIdCookie = Arrays.stream(request.getCookies())</span>
+<span class="fc" id="L94">            .filter(cookie -&gt; &quot;user-id&quot;.equals(cookie.getName()))</span>
+<span class="fc" id="L95">            .map(Cookie::getValue)</span>
+<span class="fc" id="L96">            .findFirst();</span>
 
-<span class="nc bnc" id="L98" title="All 2 branches missed.">        if (!userIdCookie.isPresent()) {</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">        if (!userIdCookie.isPresent()) {</span>
             // Cookie does not exist. No user is logged in.
-<span class="nc" id="L100">            return &quot;redirect:/login&quot;;</span>
+<span class="fc" id="L100">            return &quot;redirect:/login&quot;;</span>
         }
 
         //get cookies to find out which user is editing their client info
-<span class="nc" id="L104">        Cookie cookie1[] = request.getCookies();</span>
-<span class="nc" id="L105">        String userid=&quot;&quot;;</span>
-<span class="nc bnc" id="L106" title="All 2 branches missed.">        for(int i=0; i&lt;cookie1.length; i++) {</span>
-<span class="nc" id="L107">            userid = cookie1[i].getValue();</span>
+<span class="fc" id="L104">        Cookie cookie1[] = request.getCookies();</span>
+<span class="fc" id="L105">        String userid=&quot;&quot;;</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">        for(int i=0; i&lt;cookie1.length; i++) {</span>
+<span class="fc" id="L107">            userid = cookie1[i].getValue();</span>
             try{
-<span class="nc" id="L109">                Integer.parseInt(userid);</span>
-<span class="nc" id="L110">            }</span>
-<span class="nc" id="L111">            catch(NumberFormatException e)</span>
+<span class="fc" id="L109">                Integer.parseInt(userid);</span>
+<span class="fc" id="L110">            }</span>
+<span class="fc" id="L111">            catch(NumberFormatException e)</span>
             {
-<span class="nc" id="L113">                userid=null;</span>
+<span class="fc" id="L113">                userid=null;</span>
             }
-<span class="nc bnc" id="L115" title="All 2 branches missed.">            if(userid != null)</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">            if(userid != null)</span>
             {
-<span class="nc" id="L117">                break;</span>
+<span class="fc" id="L117">                break;</span>
             }
         }
 
         // Get the client info for the userId from the database.
-<span class="nc" id="L122">        List&lt;UserInfoEntity&gt; userInfoEntity = userInfoRepository.findByUserid(Integer.parseInt(userid));</span>
+<span class="fc" id="L122">        List&lt;UserInfoEntity&gt; userInfoEntity = userInfoRepository.findByUserid(Integer.parseInt(userid));</span>
 
-<span class="nc bnc" id="L124" title="All 2 branches missed.">        if (userInfoEntity.isEmpty()) {</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">        if (userInfoEntity.isEmpty()) {</span>
             // No user with that client id exists, lets create it.
-<span class="nc" id="L126">            UserInfoEntity newUserInfo = new UserInfoEntity();</span>
+<span class="fc" id="L126">            UserInfoEntity newUserInfo = new UserInfoEntity();</span>
 
-<span class="nc" id="L128">            newUserInfo.setFullName(temp.getFullName());</span>
-<span class="nc" id="L129">            newUserInfo.setAddress1(temp.getAddress1());</span>
-<span class="nc" id="L130">            newUserInfo.setAddress2(temp.getAddress2());</span>
-<span class="nc" id="L131">            newUserInfo.setCity(temp.getCity());</span>
-<span class="nc" id="L132">            newUserInfo.setState(temp.getState());</span>
-<span class="nc" id="L133">            newUserInfo.setZipcode(temp.getZipcode());</span>
-<span class="nc" id="L134">            newUserInfo.setUserId(Integer.parseInt(userid));</span>
+<span class="fc" id="L128">            newUserInfo.setFullName(temp.getFullName());</span>
+<span class="fc" id="L129">            newUserInfo.setEmail(temp.getEmail());</span>
+<span class="fc" id="L130">            newUserInfo.setPhone(temp.getPhone());</span>
+<span class="fc" id="L131">            newUserInfo.setAddress1(temp.getAddress1());</span>
+<span class="fc" id="L132">            newUserInfo.setAddress2(temp.getAddress2());</span>
+<span class="fc" id="L133">            newUserInfo.setCity(temp.getCity());</span>
+<span class="fc" id="L134">            newUserInfo.setState(temp.getState());</span>
+<span class="fc" id="L135">            newUserInfo.setZipcode(temp.getZipcode());</span>
+<span class="fc" id="L136">            newUserInfo.setUserId(Integer.parseInt(userid));</span>
 
-<span class="nc" id="L136">            userInfoRepository.save(newUserInfo);</span>
-<span class="nc" id="L137">        } else {</span>
+<span class="fc" id="L138">            userInfoRepository.save(newUserInfo);</span>
+<span class="fc" id="L139">        } else {</span>
             // User client info exists, lets update it.
-<span class="nc" id="L139">            userInfoEntity.get(0).setFullName(temp.getFullName());</span>
-<span class="nc" id="L140">            userInfoEntity.get(0).setEmail(temp.getEmail());</span>
-<span class="nc" id="L141">            userInfoEntity.get(0).setPhone(temp.getPhone());</span>
-<span class="nc" id="L142">            userInfoEntity.get(0).setAddress1(temp.getAddress1());</span>
-<span class="nc" id="L143">            userInfoEntity.get(0).setAddress2(temp.getAddress2());</span>
-<span class="nc" id="L144">            userInfoEntity.get(0).setCity(temp.getCity());</span>
-<span class="nc" id="L145">            userInfoEntity.get(0).setState(temp.getState());</span>
-<span class="nc" id="L146">            userInfoEntity.get(0).setZipcode(temp.getZipcode());</span>
+<span class="fc" id="L141">            userInfoEntity.get(0).setFullName(temp.getFullName());</span>
+<span class="fc" id="L142">            userInfoEntity.get(0).setEmail(temp.getEmail());</span>
+<span class="fc" id="L143">            userInfoEntity.get(0).setPhone(temp.getPhone());</span>
+<span class="fc" id="L144">            userInfoEntity.get(0).setAddress1(temp.getAddress1());</span>
+<span class="fc" id="L145">            userInfoEntity.get(0).setAddress2(temp.getAddress2());</span>
+<span class="fc" id="L146">            userInfoEntity.get(0).setCity(temp.getCity());</span>
+<span class="fc" id="L147">            userInfoEntity.get(0).setState(temp.getState());</span>
+<span class="fc" id="L148">            userInfoEntity.get(0).setZipcode(temp.getZipcode());</span>
 
-<span class="nc" id="L148">            userInfoRepository.save(userInfoEntity.get(0));</span>
+<span class="fc" id="L150">            userInfoRepository.save(userInfoEntity.get(0));</span>
         }
 
-<span class="nc" id="L151">        return &quot;redirect:/reservation&quot;;</span>
+<span class="fc" id="L153">        return &quot;redirect:/reservation&quot;;</span>
     }
 
     private boolean isNumber(String str){
-<span class="fc" id="L155">        boolean flag = true;</span>
-<span class="fc bfc" id="L156" title="All 2 branches covered.">        for(int i = 0; i &lt; str.length(); i++){</span>
-<span class="pc bpc" id="L157" title="1 of 2 branches missed.">            if(Character.isDigit(str.charAt(i)) == false){</span>
-<span class="nc" id="L158">                flag = false;</span>
-<span class="nc" id="L159">                break;</span>
+<span class="fc" id="L157">        boolean flag = true;</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">        for(int i = 0; i &lt; str.length(); i++){</span>
+<span class="pc bpc" id="L159" title="1 of 2 branches missed.">            if(Character.isDigit(str.charAt(i)) == false){</span>
+<span class="nc" id="L160">                flag = false;</span>
+<span class="nc" id="L161">                break;</span>
             }
         }
-<span class="fc" id="L162">        return flag;</span>
+<span class="fc" id="L164">        return flag;</span>
     }
 }
 

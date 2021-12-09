@@ -44,11 +44,6 @@ public class LoginController {
             return "redirect:/login";
         }
         
-        if(users.get(0).isAdmin()==true){
-
-            return "addTable";
-        }
-
         
         UserEntity user = users.get(0);
 

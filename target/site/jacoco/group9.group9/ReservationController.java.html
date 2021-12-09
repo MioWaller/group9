@@ -5,6 +5,11 @@
 //import javax.servlet.http.Cookie;
 //import javax.servlet.http.HttpServletResponse;
 
+
+import java.util.Arrays;
+import java.util.Optional;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,95 +19,251 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.*;
+import java.time.LocalDate;
 
 @Controller
-<span class="fc" id="L19">public class ReservationController {</span>
+<span class="fc" id="L25">public class ReservationController {</span>
 
     @Autowired
     private ReservationRepository reservationRepository;
 
-    @GetMapping(&quot;/reservation&quot;)
-	public String reservation(Model model) {
-        
-<span class="nc" id="L27">        ReservationModel reservationModel = new ReservationModel();</span>
-<span class="nc" id="L28">        model.addAttribute(&quot;reservationModel&quot;, reservationModel);</span>
-<span class="nc" id="L29">        model.addAttribute(&quot;validationError&quot;, &quot;&quot;); //nothing for the time being</span>
+    @Autowired
+    private UserInfoRepository userInfoRepository;
+    @Autowired
+    private HolidayRepository holidayRepository;
 
-<span class="nc" id="L31">        return &quot;reservation&quot;;</span>
+    @GetMapping(&quot;/reservation&quot;)
+	public String reservation(Model model, HttpServletRequest request) {
+        
+<span class="nc" id="L38">        model.addAttribute(&quot;validationError&quot;, &quot;&quot;); //nothing for the time being</span>
+
+        //time restrictions for the past
+<span class="nc" id="L41">        LocalDate now = LocalDate.now();</span>
+<span class="nc" id="L42">        LocalDate later = now.plusYears(2);</span>
+<span class="nc" id="L43">        model.addAttribute(&quot;now&quot;, now);</span>
+<span class="nc" id="L44">        model.addAttribute(&quot;later&quot;, later);</span>
+
+<span class="nc" id="L46">        Cookie cookie1[] = request.getCookies();</span>
+<span class="nc" id="L47">        String userid=&quot;&quot;;</span>
+
+<span class="nc bnc" id="L49" title="All 2 branches missed.">        for(int i=0; i&lt;cookie1.length; i++) {</span>
+<span class="nc" id="L50">            userid = cookie1[i].getValue();</span>
+            try{
+<span class="nc" id="L52">                Integer.parseInt(userid);</span>
+<span class="nc" id="L53">            }</span>
+<span class="nc" id="L54">            catch(NumberFormatException e)</span>
+            {
+<span class="nc" id="L56">                userid=null;</span>
+            }
+<span class="nc bnc" id="L58" title="All 2 branches missed.">            if(userid != null)</span>
+            {
+<span class="nc" id="L60">                break;</span>
+            }
+        }
+
+<span class="nc" id="L64">        List&lt;UserInfoEntity&gt; temp = userInfoRepository.findByUserid(Integer.parseInt(userid));</span>
+        //prefill fullName, phoneNumber and email using the info in the profile page
+        //for reservation
+<span class="nc" id="L67">        ReservationModel reservationModel = new ReservationModel();</span>
+
+<span class="nc bnc" id="L69" title="All 2 branches missed.">        if (!temp.isEmpty()){</span>
+<span class="nc" id="L70">            reservationModel.setFullName(temp.get(0).getFullName());</span>
+<span class="nc" id="L71">            reservationModel.setPhoneNumber(temp.get(0).getPhone());</span>
+<span class="nc" id="L72">            System.out.println(temp.get(0).getPhone() + &quot;  &quot; + temp.get(0).getEmail());</span>
+<span class="nc" id="L73">            reservationModel.setEmail(temp.get(0).getEmail());</span>
+        }
+
+<span class="nc" id="L76">        model.addAttribute(&quot;reservationModel&quot;, reservationModel);</span>
+
+
+
+        // List&lt;UserInfoEntity&gt; userInfoEntity = userInfoRepository.findByUserid(Integer.parseInt(userid));
+
+        // if (userInfoEntity.isEmpty()) {
+        //     // No user with that client id exists, which means it's a guest.
+        //     model.addAttribute(&quot;guestStatus&quot;, &quot;You are reseving as a guest user&quot;);
+        // }
+
+<span class="nc" id="L87">        return &quot;reservation&quot;;</span>
 	}
 
  
     @RequestMapping(value = &quot;/reservation&quot;, method = RequestMethod.POST, params = &quot;showAvailableTables&quot;)
-    public String showAvaliableTables(Model model, @ModelAttribute ReservationModel reservationModel, HttpServletRequest request) {
+    public String showAvailableTables(Model model, @ModelAttribute ReservationModel reservationModel, HttpServletRequest request) {
+        
+
+
         
         /* input validation for reservation variable go here */
         //also check for table availability
-
-<span class="nc bnc" id="L41" title="All 2 branches missed.">        if (reservationModel.getFullName() == &quot;&quot; || </span>
-<span class="nc bnc" id="L42" title="All 2 branches missed.">            reservationModel.getFullName().length() &gt; 50 ||</span>
-<span class="nc bnc" id="L43" title="All 2 branches missed.">            !isNumber(reservationModel.getPhoneNumber()) ||</span>
-<span class="nc bnc" id="L44" title="All 2 branches missed.">            !isValidEmailAddress(reservationModel.getEmail()) ||</span>
-<span class="nc bnc" id="L45" title="All 2 branches missed.">            !isNumber(reservationModel.getNumOfGuests()) ||</span>
-<span class="nc bnc" id="L46" title="All 4 branches missed.">            (isNumber(reservationModel.getNumOfGuests()) &amp;&amp; !(Integer.parseInt(reservationModel.getNumOfGuests()) &gt; 0)))</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">        if (reservationModel.getFullName() == &quot;&quot; || </span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">            reservationModel.getFullName().length() &gt; 50 ||</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">            !isNumber(reservationModel.getPhoneNumber()) ||</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">            !isValidEmailAddress(reservationModel.getEmail()))</span>
         {
-<span class="nc" id="L48">            model.addAttribute(&quot;validationError&quot;, &quot;You have entered invalid parameter. Please try again.&quot;);</span>
+<span class="nc" id="L104">            model.addAttribute(&quot;validationError&quot;, &quot;You have entered invalid parameter. Please try again.&quot;);</span>
 
-<span class="nc" id="L50">            return &quot;reservation&quot;;</span>
+<span class="nc" id="L106">            return &quot;reservation&quot;;</span>
         }
 
         //get to cookie to find out the userid for this user
-<span class="nc" id="L54">        Cookie cookie1[] = request.getCookies();</span>
-<span class="nc" id="L55">        String userid=&quot;&quot;;</span>
-<span class="nc bnc" id="L56" title="All 2 branches missed.">        for(int i=0; i&lt;cookie1.length; i++) {</span>
-<span class="nc" id="L57">            userid = cookie1[i].getValue();</span>
+<span class="nc" id="L110">        Cookie cookie1[] = request.getCookies();</span>
+<span class="nc" id="L111">        String userid=&quot;&quot;;</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">        for(int i=0; i&lt;cookie1.length; i++) {</span>
+<span class="nc" id="L113">            userid = cookie1[i].getValue();</span>
             try{
-<span class="nc" id="L59">                Integer.parseInt(userid);</span>
-<span class="nc" id="L60">            }</span>
-<span class="nc" id="L61">            catch(NumberFormatException e)</span>
+<span class="nc" id="L115">                Integer.parseInt(userid);</span>
+<span class="nc" id="L116">            }</span>
+<span class="nc" id="L117">            catch(NumberFormatException e)</span>
             {
-<span class="nc" id="L63">                userid=null;</span>
+<span class="nc" id="L119">                userid=null;</span>
             }
-<span class="nc bnc" id="L65" title="All 2 branches missed.">            if(userid != null)</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">            if(userid != null)</span>
             {
-<span class="nc" id="L67">                break;</span>
+<span class="nc" id="L123">                break;</span>
             }
         }
 
-<span class="nc" id="L71">        ReservationEntity newReservationEntity = new ReservationEntity();</span>
+<span class="nc" id="L127">        ReservationEntity newReservationEntity = new ReservationEntity();</span>
 
-<span class="nc" id="L73">        newReservationEntity.setFullName(reservationModel.getFullName());</span>
-<span class="nc" id="L74">        newReservationEntity.setPhoneNumber(reservationModel.getPhoneNumber());</span>
-<span class="nc" id="L75">        newReservationEntity.setEmail(reservationModel.getEmail());</span>
-<span class="nc" id="L76">        newReservationEntity.setDate(reservationModel.getDate());</span>
-<span class="nc" id="L77">        newReservationEntity.setTime(reservationModel.getTime());</span>
-<span class="nc" id="L78">        newReservationEntity.setNumOfGuests(Integer.parseInt(reservationModel.getNumOfGuests()));</span>
-<span class="nc" id="L79">        newReservationEntity.setUserId(Integer.parseInt(userid));</span>
+<span class="nc" id="L129">        newReservationEntity.setFullName(reservationModel.getFullName());</span>
+<span class="nc" id="L130">        newReservationEntity.setPhoneNumber(reservationModel.getPhoneNumber());</span>
+<span class="nc" id="L131">        newReservationEntity.setEmail(reservationModel.getEmail());</span>
+<span class="nc" id="L132">        newReservationEntity.setDate(reservationModel.getDate());</span>
+<span class="nc" id="L133">        newReservationEntity.setTime(reservationModel.getTime());</span>
+        // newReservationEntity.setNumOfGuests(Integer.parseInt(reservationModel.getNumOfGuests()));
+<span class="nc" id="L135">        newReservationEntity.setUserId(Integer.parseInt(userid));</span>
 
-<span class="nc" id="L81">        reservationRepository.save(newReservationEntity);</span>
+        
 
+        //  HolidayEntity he=holidayRepository.findByDate(reservationModel.getDate());
+        //  boolean flag=he.isHoliday();
+        //  if(flag==true){
+        //     newReservationEntity.setHoliday(true);
+        //     reservationRepository.save(newReservationEntity);
+        //     return &quot;payment&quot;;
+         //}
+        // 
 
-    //     //also add isHoliday info here
-
-<span class="nc" id="L86">        return &quot;redirect:/displayAvailableTable&quot;;</span>
+        // newReservationEntity.setHoliday(false);
+<span class="nc" id="L149">        reservationRepository.save(newReservationEntity);</span>
+        
+<span class="nc" id="L151">        return &quot;redirect:/displayAvailableTable&quot;;</span>
     }
 
     private boolean isNumber(String str){
-<span class="nc" id="L90">        boolean flag = true;</span>
-<span class="nc bnc" id="L91" title="All 2 branches missed.">        for(int i = 0; i &lt; str.length(); i++){</span>
-<span class="nc bnc" id="L92" title="All 2 branches missed.">            if(Character.isDigit(str.charAt(i)) == false){</span>
-<span class="nc" id="L93">                flag = false;</span>
-<span class="nc" id="L94">                break;</span>
+<span class="nc" id="L155">        boolean flag = true;</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">        for(int i = 0; i &lt; str.length(); i++){</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">            if(Character.isDigit(str.charAt(i)) == false){</span>
+<span class="nc" id="L158">                flag = false;</span>
+<span class="nc" id="L159">                break;</span>
             }
         }
-<span class="nc" id="L97">        return flag;</span>
+<span class="nc" id="L162">        return flag;</span>
     }
+
+
+
     //source: https://stackoverflow.com/questions/624581/what-is-the-best-java-email-address-validation-method
     public boolean isValidEmailAddress(String email) {
-<span class="nc" id="L101">        String ePattern = &quot;^[a-zA-Z0-9.!#$%&amp;'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$&quot;;</span>
-<span class="nc" id="L102">        java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);</span>
-<span class="nc" id="L103">        java.util.regex.Matcher m = p.matcher(email);</span>
-<span class="nc" id="L104">        return m.matches();</span>
+<span class="nc" id="L169">        String ePattern = &quot;^[a-zA-Z0-9.!#$%&amp;'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$&quot;;</span>
+<span class="nc" id="L170">        java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);</span>
+<span class="nc" id="L171">        java.util.regex.Matcher m = p.matcher(email);</span>
+<span class="nc" id="L172">        return m.matches();</span>
     }
+
+
+
+
+/////////////////////////////////
+    public boolean isValidDate (String date){
+<span class="nc" id="L180">        boolean flag=false;</span>
+<span class="nc" id="L181">        String year=&quot;&quot;;</span>
+<span class="nc" id="L182">        String day=&quot;&quot;;</span>
+<span class="nc" id="L183">        String month=&quot;&quot;;</span>
+<span class="nc bnc" id="L184" title="All 2 branches missed.">     for(int i=0;i&lt;10;i++){</span>
+<span class="nc bnc" id="L185" title="All 2 branches missed.">       if(i&lt;4){</span>
+<span class="nc" id="L186">         year= year+date.charAt(i);</span>
+<span class="nc" id="L187">       }</span>
+<span class="nc bnc" id="L188" title="All 4 branches missed.">       else if(i&gt;4 &amp;&amp; i&lt;7){</span>
+<span class="nc" id="L189">           month=month+date.charAt(i);</span>
+    
+<span class="nc" id="L191">       }</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">       else if (i&gt;7){</span>
+    
+<span class="nc" id="L194">       day=day+date.charAt(i);</span>
+       }
+     
+     else{
+    
+     }
+    }
+    //System.out.println(year+&quot; &quot;+month+&quot;  &quot;+day+&quot;  \n&quot;);
+<span class="nc" id="L202">     int y=Integer.parseInt(year);</span>
+<span class="nc" id="L203">     int m=Integer.parseInt(month);</span>
+<span class="nc" id="L204">     int d=Integer.parseInt(day);</span>
+
+    
+    
+     //System.out.println(y+&quot;  &quot;+m+&quot;  &quot;+d+&quot;  \n&quot;);
+<span class="nc bnc" id="L209" title="All 10 branches missed.">    if(y&gt;2020 &amp;&amp; m&gt;0 &amp;&amp; m&lt;13 &amp;&amp; d&gt;0 &amp;&amp; d&lt;31){</span>
+<span class="nc" id="L210">    flag=true;</span>
+<span class="nc" id="L211">    }</span>
+    else{
+<span class="nc" id="L213">        flag=false;</span>
+    }
+
+<span class="nc bnc" id="L216" title="All 2 branches missed.">    if(flag){</span>
+<span class="nc" id="L217">        return true;</span>
+    }
+    else{
+<span class="nc" id="L220">        return false;</span>
+    }
+     
+    }
+
+    
+
+
+
+@RequestMapping(&quot;/seeReservation&quot;)
+public String adminReservation(Model model){
+  
+  
+<span class="nc" id="L233">    model.addAttribute(&quot;list&quot;, reservationRepository.findAll());</span>
+
+
+<span class="nc" id="L236">    return &quot;allReservation&quot;;</span>
+}
+
+@RequestMapping(&quot;/deleteReservation&quot;)
+public String adminReservation(@RequestParam(name=&quot;id&quot;)String id,Model model){
+  
+<span class="nc" id="L242">    int ids=Integer.parseInt(id);</span>
+
+<span class="nc" id="L244">    reservationRepository.deleteById(ids);</span>
+  
+
+
+<span class="nc" id="L248">    model.addAttribute(&quot;list&quot;, reservationRepository.findAll());</span>
+
+
+<span class="nc" id="L251">    return &quot;allReservation&quot;;</span>
+}
+
+
+
+
+
+@RequestMapping(&quot;/reservationOfGuest&quot;)
+	public String reservationOfGuest(Model model) {
+        
+<span class="nc" id="L261">        ReservationModel loginModel = new ReservationModel();</span>
+<span class="nc" id="L262">        model.addAttribute(&quot;reservationModel&quot;, loginModel);</span>
+
+<span class="nc" id="L264">        return &quot;reservation&quot;;</span>
+	}
+
 
 
 

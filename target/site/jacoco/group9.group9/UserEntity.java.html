@@ -24,7 +24,7 @@ import javax.persistence.*;
 <span class="fc" id="L24">    }</span>
 
     public String getUsername() {
-<span class="nc" id="L27">        return username;</span>
+<span class="fc" id="L27">        return username;</span>
     }
 
     public void setUsername(String username) {
@@ -39,18 +39,10 @@ import javax.persistence.*;
 <span class="fc" id="L39">        this.password = password;</span>
 <span class="fc" id="L40">    }</span>
 
-    public boolean isAdmin() {
-<span class="nc" id="L43">        return isAdmin;</span>
-    }
-
-    public void setAdmin(boolean isAdmin) {
-<span class="nc" id="L47">        this.isAdmin = isAdmin;</span>
-<span class="nc" id="L48">    }</span>
-
     @Override
     public String toString() {
-<span class="nc" id="L52">        return &quot;UserEntity [isAdmin=&quot; + isAdmin + &quot;, password=&quot; + password + &quot;, user_id (aka. id) =&quot; + id + &quot;, username=&quot;</span>
-<span class="nc" id="L53">                + username + &quot;]&quot;;</span>
+<span class="fc" id="L44">        return &quot;UserEntity [password=&quot; + password + &quot;, user_id (aka. id) =&quot; + id + &quot;, username=&quot;</span>
+<span class="fc" id="L45">                + username + &quot;]&quot;;</span>
     }
 
      
